@@ -62,5 +62,40 @@ When this is down building the Front-End files it will automagically launch a ne
 
 SWEET!!!
 
-Let's go ahead and setup your 
+Let's go ahead and setup your the repository now. From your terminal while still in the `todo-list-app` directory run the following.
+
+```
+git init
+```
+
+Open the `todo-list-app` in your favorite editor. I personally recommend VS Code in case you're looking for a recommendation. We're going to be adding some lines of code to the `.gitignore` file. Add the following to the file under the `# dependencies` section. We already have a lot of different things listed in there so we only need to add the one extra thing.
+
+```
+/package-lock.json
+```
+
+With this addition we simply need to commit the initial state of our code. From the terminal run the following.
+
+```
+git add .
+git commit -m "initial application codebase"
+```
+
+With this we have a local repository instantiated on our machine but we need to get it up on GitHub. Open your browser and navigate to you GitHub page. In the top right corner you will see a "+" icon. Go ahead and click on the plus. In the dropdown select **New repository**. In the **Repository name** field enter in "todo-list-app" then scroll to the bottom of the page and click on the green **Create repository** button.
+
+GitHub will create the repository for you and then all we need to do is git our local repository pushed up to this new remote repository. We'll do this by running these two lines of code in our terminal.
+
+```
+git remote add origin https://github.com/myronschippers/todo-list-app.git
+```
+
+then
+
+```
+git push -u origin master
+```
+
+We're not going to worry about branching strategies with this tutorial but if you want to use a branching strategy please feel free. For the rest of us will just be working on the `master` branch.
+
+
 
