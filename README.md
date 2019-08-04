@@ -97,5 +97,133 @@ git push -u origin master
 
 We're not going to worry about branching strategies with this tutorial but if you want to use a branching strategy please feel free. For the rest of us will just be working on the `master` branch.
 
+### Restructuring the Application Base.
 
+With the code up and running I am going to walk you through some structure updates because I like to work in a little different of a structure for my projects in order to keep things organized. After that I am going to change the components from functional components to class based components so that we can focus on a more Object Oriented Programming approach. I know know functional components are the new hotness but just bare with me. First let's move some files around. 
 
+Create a new director called `components` inside of the `src` directory.
+
+```
+todo-list-app
+└── src
+    └── components
+```
+
+Inside of the `components` directory create another directory called `App`.
+
+```
+todo-list-app
+└── src
+    └── components
+        └── App
+```
+
+Move `./src/App.js`, `./src/App.css`, `./src/App.test.js`, and `./src/logo.svg` into `./src/components/App`. Our directory structure should look something like this:
+
+```
+todo-list-app
+├── README.md
+├── node_modules
+├── package.json
+├── .gitignore
+├── public
+│   ├── favicon.ico
+│   ├── index.html
+│   └── manifest.json
+└── src
+    ├── components
+    │   └── App
+    │       ├── App.css
+    │       ├── App.js
+    │       ├── App.test.js
+    │       └── logo.svg
+    ├── index.css
+    ├── index.js
+    └── serviceWorker.js
+```
+
+Your browser would have refreshed after you made those changes and if we take a look we'll likely see some errors because we have to update the file paths.
+
+Open up `./src/index.js`.
+
+Change:
+
+```JS
+import App from './App';
+```
+
+to be:
+
+```JS
+import App from './components/App/App';
+```
+
+If you look back at the browser again everything should be working just fine. This is something that is setup in the `create-react-app` build where it will surface any JS error or React errors directly in your browser window. This will help us debug errors as we come across them.
+
+Open up `./src/components/App/App.js` so we can convert it to being a class based component instead of a functional component.
+
+Change:
+
+```JS
+import React from 'react';
+```
+
+to be:
+
+```JS
+import React, { Component } from 'react';
+```
+
+AND
+
+Change:
+
+```JS
+function App() {
+    return (
+        <div className="App">
+            <header className="App-header">
+                <img src={logo} className="App-logo" alt="logo" />
+                <p>
+                    Edit <code>src/App.js</code> and save to reload.
+                </p>
+                <a
+                className="App-link"
+                href="https://reactjs.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                >
+                    Learn React
+                </a>
+            </header>
+        </div>
+    );
+}
+```
+
+to be:
+
+```JS
+class App extends Component {
+    render() {
+        return (
+            <div className="App">
+                <header className="App-header">
+                    <img src={logo} className="App-logo" alt="logo" />
+                    <p>
+                        Edit <code>src/App.js</code> and save to reload.
+                    </p>
+                    <a
+                    className="App-link"
+                    href="https://reactjs.org"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >
+                        Learn React
+                    </a>
+                </header>
+            </div>
+        );
+    }
+}
+```
