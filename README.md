@@ -246,4 +246,75 @@ class App extends Component {
 
 From here we're ready to start getting into the actual application and write some of our own components.
 
+# Todo List
+
+This application is going to be a todo list but it's gonna have some very specific requirements so that we can touch on several different features in React. We'll layout all of the requirements first so you know what you're getting into. Some of this I am going to walk you through step by step and other portion I will leave for you to complete on your own.
+
+**Application Requirements:**
+
+1. Landing Page
+    * Splash Hero Image with a button that says **Get Started**
+    * On click of the **Get Started** button user is taken to the **Dashboard**
+1. Header
+    * Colored application bar at the top of the page
+    * Text on the left that says, "Todo List"
+    * Navigation on the right with three links; "Daily", "Categories", & "Dashboard"
+1. Footer
+    * Centered text saying, `&copy; Todo List 2019`
+1. Todo List (feature)
+    * Completed items should be displayed at the bottom of the list
+    * Incomplete items should be displayed toward the top of the list
+    * List data structure
+
+    ```JS
+    {
+        name: '',
+        createdOn: '',
+        todos: [
+            {}, // todo item
+        ],
+    }
+    ```
+
+1. Todo Item (feature)
+    * Each item has 4 major features; **Title**, **Details**, **Status**, & **Delete**
+    * Visually starting on the left
+        * Checkbox representing the item status
+        * Title text with the detail text just below
+        * Delete button / icon
+    * Data structure
+
+    ```JS
+    {
+        title: 'string',
+        details: 'string',
+        complete: false,
+    }
+    ```
+
+1. Add Todo Item (feature)
+    * There should be fields to enter in **Title** & **Details** along with a button for the user to click when they have entered in the necessary information
+    * On the click of the **Add Todo** button a data item is created and added to the appropriate Todo List
+1. Make Todo List (feature)
+    * Has fields to enter in a **Name** and **Description** for the new todo list but only the **Name** is required
+    * On click of the **Make List** button create a new todo list for the user to add items to. once the list has been created make sure to 
+1. Daily (page)
+    * Single Todo List that would only display the todo items for the day. This is not a todo list the user can change any other details of the list.
+    * Features:
+        * Make Todo List
+        * Add Todo item
+        * Todo List
+        * Todo Item
+1. Categories (page)
+    * A list of all the custom todo lists that the user has created.
+    * The individual todo category/grouping will display:
+        * Name of Category
+        * Percentage Complete
+        * Total Number of Todos
+        * Number of Completed Todos
+        * A Delete Button
+1. Specific Category (page)
+    * Custom todo list created by the user. It will have an overall level of completion along unlike the Daily Todo. This will also have a name displayed on the page that is used to identify the list.
+1. Dashboard (page)
+
 ### Scaffolding our Application Layout and Router
