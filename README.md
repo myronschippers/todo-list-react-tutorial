@@ -14,6 +14,8 @@ This tutorial will teach ReactJS by building a Todo List. We will start by build
 
 Open your terminal and navigate to the directory where you want your application to live.
 
+**run (in terminal):**
+
 ```
 npx create-react-app todo-list-app
 ```
@@ -42,17 +44,23 @@ todo-list-app
 
 Navigate into the the `todo-list-app` application directory from the terminal.
 
+**run (in terminal):**
+
 ```
 cd todo-list-app
 ```
 
 There are some dependencies that we are going to need to add. From the terminal now that we are in the `todo-list-app` directory we'll use `npm` to install the necessary dependencies by running the following command.
 
+**run (in terminal):**
+
 ```
 npm install --save redux react-router-dom 
 ```
 
 This one command installs `redux` and `react-router-dom` as dependencies in our project. The `README.md` in your `todo-list-app` application directory has details on all of the scripts available for running the build but we're going to take a look at just one of them for now. Go ahead and run the following command from your terminal in the `todo-list-app` directory.
+
+**run (in terminal):**
 
 ```
 npm start
@@ -64,17 +72,23 @@ SWEET!!!
 
 Let's go ahead and setup your the repository now. From your terminal while still in the `todo-list-app` directory run the following.
 
+**run (in terminal):**
+
 ```
 git init
 ```
 
 Open the `todo-list-app` in your favorite editor. I personally recommend VS Code in case you're looking for a recommendation. We're going to be adding some lines of code to the `.gitignore` file. Add the following to the file under the `# dependencies` section. We already have a lot of different things listed in there so we only need to add the one extra thing.
 
+**add to `.gitignore`:**
+
 ```
 /package-lock.json
 ```
 
 With this addition we simply need to commit the initial state of our code. From the terminal run the following.
+
+**run (in terminal):**
 
 ```
 git add .
@@ -85,11 +99,13 @@ With this we have a local repository instantiated on our machine but we need to 
 
 GitHub will create the repository for you and then all we need to do is git our local repository pushed up to this new remote repository. We'll do this by running these two lines of code in our terminal.
 
+**run (in terminal):**
+
 ```
 git remote add origin https://github.com/myronschippers/todo-list-app.git
 ```
 
-then
+**then run:**
 
 ```
 git push -u origin master
@@ -146,13 +162,13 @@ Your browser would have refreshed after you made those changes and if we take a 
 
 Open up `./src/index.js`.
 
-Change:
+**Change:**
 
 ```JS
 import App from './App';
 ```
 
-to be:
+**to be:**
 
 ```JS
 import App from './components/App/App';
@@ -162,21 +178,21 @@ If you look back at the browser again everything should be working just fine. Th
 
 Open up `./src/components/App/App.js` so we can convert it to being a class based component instead of a functional component.
 
-Change:
+**Change:**
 
 ```JS
 import React from 'react';
 ```
 
-to be:
+**to be:**
 
 ```JS
 import React, { Component } from 'react';
 ```
 
-AND
+**AND**
 
-Change:
+**Change:**
 
 ```JS
 function App() {
@@ -201,7 +217,7 @@ function App() {
 }
 ```
 
-to be:
+**to be:**
 
 ```JS
 class App extends Component {
@@ -227,3 +243,7 @@ class App extends Component {
     }
 }
 ```
+
+From here we're ready to start getting into the actual application and write some of our own components.
+
+### Scaffolding our Application Layout and Router
