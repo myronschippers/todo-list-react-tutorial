@@ -248,7 +248,7 @@ class App extends Component {
 
 From here we're ready to start getting into the actual application and write some of our own components.
 
-# Todo List
+# Todo List, Front-End Application
 
 This application is going to be a todo list but it's gonna have some very specific requirements so that we can touch on several different features in React. We'll layout all of the requirements first so you know what you're getting into. Some of this I am going to walk you through step by step and other portion I will leave for you to complete on your own.
 
@@ -332,4 +332,83 @@ This application is going to be a todo list but it's gonna have some very specif
         * List of custom todo lists
         * Individual Custom Todo List Each shows the list's name and the percentage of completion and a button that says "Open"
 
-### Scaffolding our Application Layout and Router
+## Phase 1: Scaffolding our Application
+
+We'll be putting together the overall master layout for the Todo List application. In this phase we will also be stubbing in all of the pages we'll need and hook up the Front-End routes needed to navigate to the different pages.
+
+**Major Topics:** 
+* Component Creation
+* Component Props
+* React Router
+
+### Phase 1.1: Adding Layout Markup JSX
+
+We are going to use something called [JSX](https://reactjs.org/docs/introducing-jsx.html) to help us write some elements in our Javascript. JSX is a syntax extension to Javascript and it produces React "element". You can think of it as a way to write HTML in our Javascript. It is extremely handy when using React.
+
+Example JSX:
+
+```JSX
+const element = <h1>Hello, world!</h1>;
+```
+
+Open up `./src/components/App/App.js` so we can begin to flesh out our application elements. Lets start by removing all of the existing markup except the outer most `<div>` and then I can highlight some of what is going on here.
+
+```JS
+import React, { Component } from 'react';
+import './App.css';
+
+class App extends Component {
+    render() {
+        return (
+            <div className="scaffold">
+            </div>
+        );
+    }
+}
+
+export default App;
+```
+
+A React Component is created with `class App extends Component` and every class based React Component `extends` the React base Component class to allow access to all of the special React things. Every React component class also must have a `render()` method. The build system will actually throw an error if you do not have one as well as a `return` inside of your `render()` method. Whatever is being returned is what will render as part of your view. All of your JSX normally goes in the `return` but it doesn't have to. You may have cases where you need to conditionally render something and might use the JSX just before the `return` still in the `render()` method.
+
+I am going to supply you with the HTML markup and styling so that we can expedite the process. This markup is going to include the header, footer, and landing page content. Once the mark up is in place we'll begin to look at how we "Componentize" the application and what that means.
+
+First we'll need to add a class to our `./public/index.html` file.
+
+**Change from:**
+
+```HTML
+<div id="root"></div>
+```
+
+**to be:**
+
+```HTML
+<div id="root" class="scaffoldPrimer"></div>
+```
+
+You can take the code I am providing you below and place it in `./src/components/App.js`. Once the code and styling is in place we'll look back at some of the new features you're seeing in the JSX.
+
+```JS
+
+```
+
+### Phase 1.2: Header Markup and Styling
+
+### Phase 1.3: Footer Markup and Styling
+
+### Phase 1.4: Landing Page Content and Styling
+
+### Phase 1.5: Componentize Application Header
+
+### Phase 1.6: Componentize Application Footer
+
+### Phase 1.7: Componentize Hero for Landing Page
+
+### Phase 1.8: Setup React Router and Create "Landing", "Daily", "Categories", & "Dashboard" Pages
+
+## Phase 2: Creating Daily Todo List
+
+## Phase 3: Creating Custom Todo Lists
+
+## Phase 4: Creating Dashboard
