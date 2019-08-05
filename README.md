@@ -97,6 +97,8 @@ git commit -m "initial application codebase"
 
 With this we have a local repository instantiated on our machine but we need to get it up on GitHub. Open your browser and navigate to you GitHub page. In the top right corner you will see a "+" icon. Go ahead and click on the plus. In the dropdown select **New repository**. In the **Repository name** field enter in "todo-list-app" then scroll to the bottom of the page and click on the green **Create repository** button.
 
+<img src="images/create-new-repo.gif" alt="create new GitHub repository" />
+
 GitHub will create the repository for you and then all we need to do is git our local repository pushed up to this new remote repository. We'll do this by running these two lines of code in our terminal.
 
 **run (in terminal):**
@@ -261,7 +263,7 @@ This application is going to be a todo list but it's gonna have some very specif
     * Navigation on the right with three links; "Daily", "Categories", & "Dashboard"
 1. Footer
     * Centered text saying, `&copy; Todo List 2019`
-1. Todo List (feature)
+1. Custom Todo List (feature)
     * Completed items should be displayed at the bottom of the list
     * Incomplete items should be displayed toward the top of the list
     * List data structure
@@ -295,13 +297,12 @@ This application is going to be a todo list but it's gonna have some very specif
 1. Add Todo Item (feature)
     * There should be fields to enter in **Title** & **Details** along with a button for the user to click when they have entered in the necessary information
     * On the click of the **Add Todo** button a data item is created and added to the appropriate Todo List
-1. Make Todo List (feature)
+1. Make Custom Todo List (feature)
     * Has fields to enter in a **Name** and **Description** for the new todo list but only the **Name** is required
     * On click of the **Make List** button create a new todo list for the user to add items to. once the list has been created make sure to 
 1. Daily (page)
     * Single Todo List that would only display the todo items for the day. This is not a todo list the user can change any other details of the list.
     * Features:
-        * Make Todo List
         * Add Todo item
         * Todo List
         * Todo Item
@@ -314,7 +315,21 @@ This application is going to be a todo list but it's gonna have some very specif
         * Number of Completed Todos
         * A Delete Button
 1. Specific Category (page)
-    * Custom todo list created by the user. It will have an overall level of completion along unlike the Daily Todo. This will also have a name displayed on the page that is used to identify the list.
+    * Custom todo list created by the user. It will have an overall level of completion based on the number of todo items completed. This will also have a name displayed on the page that is used to identify the list.
+    * Features:
+        * Heading displaying the name of the list.
+            * The name should be editable allowing the user to change it if needed.
+        * Visualization of level of completion (# of completed todos / total # of todos)
+        * Add Todo Item
+        * Todo List
 1. Dashboard (page)
+    * Features
+        * Daily List (heading)
+        * Add Todo Item - for adding to the daily todo list
+        * Todo List - for the daily todos
+        * "Custom Todo Lists" (heading)
+        * Make Todo List
+        * List of custom todo lists
+        * Individual Custom Todo List Each shows the list's name and the percentage of completion and a button that says "Open"
 
 ### Scaffolding our Application Layout and Router
