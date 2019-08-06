@@ -387,10 +387,302 @@ First we'll need to add a class to our `./public/index.html` file.
 <div id="root" class="scaffoldPrimer"></div>
 ```
 
-You can take the code I am providing you below and place it in `./src/components/App.js`. Once the code and styling is in place we'll look back at some of the new features you're seeing in the JSX.
+We'll make use of the React logo SVG that was given to us originally. Makes sure that it is getting imported (`import logo from './logo.svg';`) at the top of our `./src/components/App/App.js` document.
 
 ```JS
+import React, { Component } from 'react';
+import logo from './logo.svg';
+import './App.css';
+```
 
+Before we start adding the content to our `./src/components/App/App.js` document I am going to give you the styles we'll be using for this first part. This is just so you don't have to worry about putting them in yourself and we can jump right into the React content. Make sure to copy these styles over to your `./src/components/App/App.css` stylesheet.
+
+```CSS
+html,
+body {
+	height: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	font-family: 'Open Sans', 'Segoe UI', Tahoma, Geneva, Arial, sans-serif;
+}
+
+/* ----------------------------------------------------------------------
+Scaffold Primer
+---------------------------------------------------------------------- */
+
+.scaffoldPrimer {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+/* ----------------------------------------------------------------------
+Scaffold
+---------------------------------------------------------------------- */
+
+.scaffold {
+	display: flex;
+	height: 100%; /* needed for IE10 */
+	min-height: 100%;
+	flex-direction: column;
+}
+
+.scaffold-hd {
+	flex: 0 0 auto;
+}
+
+.scaffold-bd {
+	flex: 1 0 auto;
+}
+
+/* ----------------------------------------------------------------------
+App Bar
+---------------------------------------------------------------------- */
+
+.appBar {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 20px 0;
+    background: #4682B4;
+    box-shadow: 0px 2px 6px rgb(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 800;
+}
+
+.appBar-identity {
+    padding: 6px 0;
+    color: #f0f8ff;
+}
+
+.appBar-actions {
+    padding: 0;
+}
+
+.primeHd {
+    display: inline-block;
+    margin: 0;
+    padding: 0 4px;
+    font-size: 1.4rem;
+    vertical-align: middle;
+}
+
+.logoIcon {
+    display: inline-block;
+    width: 3.5rem;
+    vertical-align: middle;
+}
+
+/* ----------------------------------------------------------------------
+App Base
+---------------------------------------------------------------------- */
+
+.appBase {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 15px 20px 20px;
+    background: #f8f8ff;
+    font-size: 0.8rem;
+    text-align: center;
+
+    position: relative;
+}
+
+.appBase:before {
+    content: " ";
+    width: 70%;
+    height: 1px;
+    border-radius: 1px;
+    background: #c0c0c0;
+
+    /* CSS Centering */
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%, 0);
+}
+
+/* ----------------------------------------------------------------------
+Navigation
+---------------------------------------------------------------------- */
+
+.nav {
+    display: block;
+    text-align: right;
+}
+
+.nav-list {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    font-size: 0; /* fixes a spacing issue */
+    list-style: none;
+}
+
+.nav-list > * {
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+}
+
+.nav-list > * + * {
+    margin: 0 0 0 8px;
+}
+
+.navLink {
+    display: block;
+    padding: 12px 8px;
+    box-sizing: border-box;
+    border-bottom: 4px solid #8fc9f7;
+    color: #8fc9f7;
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1.3;
+    text-decoration: none;
+    text-align: left;
+}
+
+.navLink:hover {
+    border-color: #f0f8ff;
+    color: #f0f8ff;
+    text-decoration: none;
+}
+
+/* ----------------------------------------------------------------------
+Splash
+---------------------------------------------------------------------- */
+
+.splash {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 20px;
+    background: url("/images/street-in-motion.jpg");
+    background-position: center bottom;
+    background-size: cover;
+    position: relative;
+}
+
+.splash:before {
+    content: " ";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgb(0, 0, 0, 0.4);
+}
+
+.splash-content {
+    width: 400px;
+    max-width: 70%;
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    transform: translate(0, -100%);
+    color: #ffffff;
+}
+
+.splash-content-hdg {
+    margin: 0 0 30px;
+    font-size: 2.3rem;
+    font-weight: 400;
+    color: #f0f8ff;
+    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* ----------------------------------------------------------------------
+Button
+---------------------------------------------------------------------- */
+
+.btn {
+    /* block */
+    padding: 10px 14px;
+    margin: 0;
+    border-width: 0;
+    border-bottom: 1px solid #20558a;
+    /* decoration */
+    border-radius: 3px;
+    background: #1E90FF;
+    box-shadow: 0px 2px 3px rgb(0, 0, 0, 0.2);
+    /* font / text */
+    line-height: 1.1;
+    color: rgb(0,0,0,0.7);
+    font-size: 1.1rem;
+    font-weight: 800;
+    text-shadow: 0px 1px 0px rgb(255, 255, 255, 0.2);
+    cursor: pointer;
+}
+
+.btn_big {
+    padding: 14px 18px;
+    text-transform: uppercase;
+    font-size: 1.4rem;
+    font-weight: 800;
+}
+
+```
+
+You can take the code I am providing you below and place it in `./src/components/App.js`. Once the code and styling is in place we'll look back at some of the new features you're seeing in the JSX.
+
+**In `./src/components/App/App.js`:**
+
+```JS
+class App extends Component {
+    render() {
+        return (
+            <div className="scaffold">
+                <div className="scaffold-hd">
+                    <header className="appBar">
+                        <div className="appBar-identity">
+                            <img src={logo} className="logoIcon" alt="logo" />
+                            <h1 className="primeHd">Todo List</h1>
+                        </div>
+                        <div className="appBar-actions">
+                            <div className="nav">
+                                <ul className="nav-list">
+                                    <li>
+                                        <a href="/Daily" className="navLink">Daily</a>
+                                    </li>
+                                    <li>
+                                        <a href="/Categories" className="navLink">Categories</a>
+                                    </li>
+                                    <li>
+                                        <a href="/Dashboard" className="navLink">Dashboard</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </header>
+                </div>
+                <div className="scaffold-bd">
+                    <div className="splash">
+                        <div className="splash-content">
+                            <h2 className="splash-content-hdg">Keep yourself organized</h2>
+                            <button className="btn btn_big">Get Started</button>
+                        </div>
+                    </div>
+                </div>
+                <div className="scaffold-ft">
+                    <footer className="appBase">
+                        &copy; Todo List 2019
+                    </footer>
+                </div>
+            </div>
+        );
+    }
+}
 ```
 
 ### Phase 1.2: Header Markup and Styling
