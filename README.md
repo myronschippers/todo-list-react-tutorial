@@ -723,9 +723,22 @@ That's not a lot of content but if we look out our application in the browser th
 
 ### Phase 1.4: Landing Page Content and Styling
 
-We are going to be using an image I pulled off of [Unsplash.com](https://unsplash.com/) for the hero/splash image on our home/landing page. Go into the `images` directory in this tutorial and copy the `street-in-motion.jpg` file over to `./public/images` in your Todo List application.
+In **Phase 1.4** we're gonna update our application **PAGE BODY** content by creating a splash image that takes up the entire body content area and has text with a button sitting on top of the splash image.
+
+**Editing (files):**
+
+* `App.js` - located at `./src/components/App/App.js`
+* `App.css` - located at `./src/components/App/App.css`
+
+**Adding (files):**
+
+* `street-in-motion.jpg` - located at `./public/images/street-in-motion.jpg`
+
+We are going to be using an image I pulled off of [Unsplash.com](https://unsplash.com/) for the hero/splash image on our home/landing page. Go into the `images` directory in this tutorial and copy the `street-in-motion.jpg` file over to the `./public/images` directory in your Todo List application.
 
 Move `./images/street-in-motion.jpg` to your `./public/images/` directory.
+
+Once again it's styling time. Copy the below code snippet to the bottom of the `App.css` file. The styling snippet is what will get our splash image to cover the entire content area and positions that splash text with button content overtop of the image.
 
 ```CSS
 /* ----------------------------------------------------------------------
@@ -803,6 +816,8 @@ Button
 
 ```
 
+That's great but we need content for the styles to be effective so let's replace the **PAGE BODY** text in our `App.js` with the JSX content in the code snippet below.
+
 ```JS
 class App extends Component {
     render() {
@@ -827,6 +842,10 @@ class App extends Component {
     }
 }
 ```
+
+We should now have what looks like a full application in our web browser. Unfortunately there is no content yet but we'll get there.
+
+<img alt="Application after completing Phase 1.4" src="phase1.4-complete.png" />
 
 ### Phase 1.5: Componentize Application Header
 
