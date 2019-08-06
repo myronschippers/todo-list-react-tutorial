@@ -371,7 +371,29 @@ export default App;
 
 A React Component is created with `class App extends Component` and every class based React Component `extends` the React base Component class to allow access to all of the special React things. Every React component class also must have a `render()` method. The build system will actually throw an error if you do not have one as well as a `return` inside of your `render()` method. Whatever is being returned is what will render as part of your view. All of your JSX normally goes in the `return` but it doesn't have to. You may have cases where you need to conditionally render something and might use the JSX just before the `return` still in the `render()` method.
 
-I am going to supply you with the HTML markup and styling so that we can expedite the process. This markup is going to include the header, footer, and landing page content. Once the mark up is in place we'll begin to look at how we "Componentize" the application and what that means.
+Another difference you will notice in JSX is the addition of something called `className` it may seem like there is some magic going on there like with our `<div className="scaffold">` but this is just an element attribute representing the `class` attribute we are used to seeing. If you want to add a class(es) to an element you'll need to use the `className` attribute instead.
+
+```JS
+class App extends Component {
+    render() {
+        return (
+            <div className="scaffold">
+                STUFF
+            </div>
+        );
+    }
+}
+```
+
+**Outputs HTML:**
+
+```HTML
+<div class="scaffold">
+    STUFF
+</div>
+```
+
+I am going to supply you with the HTML markup and styling so that we can expedite the process of setting up the initial content. This initial markup is going to be just an initial layout. Once the mark up is in place we'll begin to look at how we "Componentize" the application and what that means.
 
 First we'll need to add a class to our `./public/index.html` file.
 
@@ -387,15 +409,7 @@ First we'll need to add a class to our `./public/index.html` file.
 <div id="root" class="scaffoldPrimer"></div>
 ```
 
-We'll make use of the React logo SVG that was given to us originally. Makes sure that it is getting imported (`import logo from './logo.svg';`) at the top of our `./src/components/App/App.js` document.
-
-```JS
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-```
-
-Before we start adding the content to our `./src/components/App/App.js` document I am going to give you the styles we'll be using for this first part. This is just so you don't have to worry about putting them in yourself and we can jump right into the React content. Make sure to copy these styles over to your `./src/components/App/App.css` stylesheet.
+Before we start adding the content to our `./src/components/App/App.js` document I am going to give you some base styles that we'll be using for this first part. This is just so you don't have to worry about putting them in yourself and we can jump right into the React content. Make sure to copy these styles over to your `./src/components/App/App.css` stylesheet replacing all of the styles that are already in there.
 
 ```CSS
 html,
@@ -439,6 +453,48 @@ Scaffold
 	flex: 1 0 auto;
 }
 
+```
+
+Use the below code block to make updates to your `./src/components/App/App.js` file. All we're doing is setting up an HTML structure where we have places for the Header, Footer, and Page Body content for our application. Eventually the `App.js` component will become our master template.
+
+**In `./src/components/App/App.js`:**
+
+```JS
+class App extends Component {
+    render() {
+        return (
+            <div className="scaffold">
+                <div className="scaffold-hd">
+                    HEADER
+                </div>
+                <div className="scaffold-bd">
+                    PAGE BODY
+                </div>
+                <div className="scaffold-ft">
+                    FOOTER
+                </div>
+            </div>
+        );
+    }
+}
+```
+
+If you look in your browser window with the application running it should look something like this.
+
+<img alt="Completing Phase 1.1" src="images/phase1.1-complete.png" />
+
+### Phase 1.2: Header Markup and Styling
+
+In **Phase 1.2** were gonna update our application page content by creating header content that will include a logo, text (that tells us what the application is), and navigation. This concept of all of this content at the top of the page within a solid color block is referred to as an App Bar. We'll need to make edits to the files listed below.
+
+**Editing:**
+
+* `App.js` - located at `./src/components/App/App.js`
+* `App.css` - located at `./src/components/App/App.css`
+
+We'll start off by updating the `App.css` with the new styles in the below code snippet. Paste these styles in at the bottom of the `App.css` file in your Todo List application repository.
+
+```CSS
 /* ----------------------------------------------------------------------
 App Bar
 ---------------------------------------------------------------------- */
@@ -478,36 +534,6 @@ App Bar
     display: inline-block;
     width: 3.5rem;
     vertical-align: middle;
-}
-
-/* ----------------------------------------------------------------------
-App Base
----------------------------------------------------------------------- */
-
-.appBase {
-    display: block;
-    box-sizing: border-box;
-    width: 100%;
-    padding: 15px 20px 20px;
-    background: #f8f8ff;
-    font-size: 0.8rem;
-    text-align: center;
-
-    position: relative;
-}
-
-.appBase:before {
-    content: " ";
-    width: 70%;
-    height: 1px;
-    border-radius: 1px;
-    background: #c0c0c0;
-
-    /* CSS Centering */
-    position: absolute;
-    left: 50%;
-    top: 0;
-    transform: translate(-50%, 0);
 }
 
 /* ----------------------------------------------------------------------
@@ -559,6 +585,122 @@ Navigation
     text-decoration: none;
 }
 
+```
+
+With our styling in place we can start editing our `App.js` content with the header markup. One of the things we'll make use of the React logo SVG that was given to us originally for our application logo. The logo gets imported using `import logo from './logo.svg';` at the top of our `App.js` document. When the logo is imported we store it in the `logo` variable so we can use it in our JSX later on. 
+
+```JS
+import React, { Component } from 'react';
+import logo from './logo.svg';
+import './App.css';
+```
+
+In the below code snippet we see the entire App component code but all we're updating is the JSX for the markup displayed to the user in place of the `HEADER` text we hand in there as a placeholder before.
+
+```JS
+class App extends Component {
+    render() {
+        return (
+            <div className="scaffold">
+                <div className="scaffold-hd">
+                    <header className="appBar">
+                        <div className="appBar-identity">
+                            <img src={logo} className="logoIcon" alt="logo" />
+                            <h1 className="primeHd">Todo List</h1>
+                        </div>
+                        <div className="appBar-actions">
+                            <nav className="nav">
+                                <ul className="nav-list">
+                                    <li>
+                                        <a href="/Daily" className="navLink">Daily</a>
+                                    </li>
+                                    <li>
+                                        <a href="/Categories" className="navLink">Categories</a>
+                                    </li>
+                                    <li>
+                                        <a href="/Dashboard" className="navLink">Dashboard</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </header>
+                </div>
+                <div className="scaffold-bd">
+                    PAGE BODY
+                </div>
+                <div className="scaffold-ft">
+                    FOOTER
+                </div>
+            </div>
+        );
+    }
+}
+```
+
+### Phase 1.3: Footer Markup and Styling
+
+```CSS
+/* ----------------------------------------------------------------------
+App Base
+---------------------------------------------------------------------- */
+
+.appBase {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 15px 20px 20px;
+    background: #f8f8ff;
+    font-size: 0.8rem;
+    text-align: center;
+
+    position: relative;
+}
+
+.appBase:before {
+    content: " ";
+    width: 70%;
+    height: 1px;
+    border-radius: 1px;
+    background: #c0c0c0;
+
+    /* CSS Centering */
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%, 0);
+}
+
+```
+
+```JS
+class App extends Component {
+    render() {
+        return (
+            <div className="scaffold">
+                <div className="scaffold-hd">
+                    {/* ... HEADER JSX CODE (see Phase 1.2) ... */}
+                </div>
+                <div className="scaffold-bd">
+                    PAGE BODY
+                </div>
+                <div className="scaffold-ft">
+                    <footer className="appBase">
+                        &copy; Todo List 2019
+                    </footer>
+                </div>
+            </div>
+        );
+    }
+}
+```
+
+### Phase 1.4: Landing Page Content and Styling
+
+We are going to be using an image I pulled off of [Unsplash.com](https://unsplash.com/) for the hero/splash image on our home/landing page. Go into the `images` directory in this tutorial and copy the `street-in-motion.jpg` file over to `./public/images` in your Todo List application.
+
+Move `./images/street-in-motion.jpg` to your `./public/images/` directory.
+
+```CSS
 /* ----------------------------------------------------------------------
 Splash
 ---------------------------------------------------------------------- */
@@ -634,37 +776,13 @@ Button
 
 ```
 
-You can take the code I am providing you below and place it in `./src/components/App.js`. Once the code and styling is in place we'll look back at some of the new features you're seeing in the JSX.
-
-**In `./src/components/App/App.js`:**
-
 ```JS
 class App extends Component {
     render() {
         return (
             <div className="scaffold">
                 <div className="scaffold-hd">
-                    <header className="appBar">
-                        <div className="appBar-identity">
-                            <img src={logo} className="logoIcon" alt="logo" />
-                            <h1 className="primeHd">Todo List</h1>
-                        </div>
-                        <div className="appBar-actions">
-                            <div className="nav">
-                                <ul className="nav-list">
-                                    <li>
-                                        <a href="/Daily" className="navLink">Daily</a>
-                                    </li>
-                                    <li>
-                                        <a href="/Categories" className="navLink">Categories</a>
-                                    </li>
-                                    <li>
-                                        <a href="/Dashboard" className="navLink">Dashboard</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </header>
+                    {/* ... HEADER JSX CODE (see Phase 1.2) ... */}
                 </div>
                 <div className="scaffold-bd">
                     <div className="splash">
@@ -675,21 +793,13 @@ class App extends Component {
                     </div>
                 </div>
                 <div className="scaffold-ft">
-                    <footer className="appBase">
-                        &copy; Todo List 2019
-                    </footer>
+                    {/* ... FOOTER JSX CODE (see Phase 1.3) ... */}
                 </div>
             </div>
         );
     }
 }
 ```
-
-### Phase 1.2: Header Markup and Styling
-
-### Phase 1.3: Footer Markup and Styling
-
-### Phase 1.4: Landing Page Content and Styling
 
 ### Phase 1.5: Componentize Application Header
 
