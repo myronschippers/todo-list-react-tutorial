@@ -343,7 +343,15 @@ We'll be putting together the overall master layout for the Todo List applicatio
 
 ### Phase 1.1: Adding Layout Markup JSX
 
-We are going to use something called [JSX](https://reactjs.org/docs/introducing-jsx.html) to help us write some elements in our Javascript. JSX is a syntax extension to Javascript and it produces React "element". You can think of it as a way to write HTML in our Javascript. It is extremely handy when using React.
+In Phase 1.1 we'll create the master layout that will established the major structure for our application. It will give us an opportunity to talk a little bit more about what JSX is because `create-react-app` sets up our build to accept JSX in our React Javascript code.
+
+**Editing (files):**
+
+* `App.js` - located at `./src/components/App/App.js`
+* `App.css` - located at `./src/components/App/App.css`
+* `index.html` - located at `./public/index.html`
+
+We are going to use something called [JSX](https://reactjs.org/docs/introducing-jsx.html) to help us write some HTML elements in our Javascript. JSX is a syntax extension to Javascript and it produces React "element". You can think of it as a way to write HTML in our Javascript. It is extremely handy when using React.
 
 Example JSX:
 
@@ -395,7 +403,7 @@ class App extends Component {
 
 I am going to supply you with the HTML markup and styling so that we can expedite the process of setting up the initial content. This initial markup is going to be just an initial layout. Once the mark up is in place we'll begin to look at how we "Componentize" the application and what that means.
 
-First we'll need to add a class to our `./public/index.html` file.
+First we'll need to add a class to our `index.html` file.
 
 **Change from:**
 
@@ -409,7 +417,7 @@ First we'll need to add a class to our `./public/index.html` file.
 <div id="root" class="scaffoldPrimer"></div>
 ```
 
-Before we start adding the content to our `./src/components/App/App.js` document I am going to give you some base styles that we'll be using for this first part. This is just so you don't have to worry about putting them in yourself and we can jump right into the React content. Make sure to copy these styles over to your `./src/components/App/App.css` stylesheet replacing all of the styles that are already in there.
+Before we start adding the content to our `App.js` document I am going to give you some base styles that we'll be using for this first part. This is just so you don't have to worry about putting them in yourself and we can jump right into the React content. Make sure to copy these styles over to your `App.css` stylesheet replacing all of the styles that are already in there.
 
 ```CSS
 html,
@@ -455,9 +463,9 @@ Scaffold
 
 ```
 
-Use the below code block to make updates to your `./src/components/App/App.js` file. All we're doing is setting up an HTML structure where we have places for the Header, Footer, and Page Body content for our application. Eventually the `App.js` component will become our master template.
+Use the below code block to make updates to your `App.js` file. All we're doing is setting up an HTML structure where we have places for the Header, Footer, and Page Body content for our application. Eventually the `App.js` component will become our master template.
 
-**In `./src/components/App/App.js`:**
+**In `App.js`:**
 
 ```JS
 class App extends Component {
