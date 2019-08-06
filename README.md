@@ -353,7 +353,7 @@ In Phase 1.1 we'll create the master layout that will established the major stru
 
 We are going to use something called [JSX](https://reactjs.org/docs/introducing-jsx.html) to help us write some HTML elements in our Javascript. JSX is a syntax extension to Javascript and it produces React "element". You can think of it as a way to write HTML in our Javascript. It is extremely handy when using React.
 
-Example JSX:
+**Example JSX:**
 
 ```JSX
 const element = <h1>Hello, world!</h1>;
@@ -495,7 +495,7 @@ If you look in your browser window with the application running it should look s
 
 In **Phase 1.2** were gonna update our application page content by creating header content that will include a logo, text (that tells us what the application is), and navigation. This concept of all of this content at the top of the page within a solid color block is referred to as an App Bar. We'll need to make edits to the files listed below.
 
-**Editing:**
+**Editing (files):**
 
 * `App.js` - located at `./src/components/App/App.js`
 * `App.css` - located at `./src/components/App/App.css`
@@ -644,6 +644,10 @@ class App extends Component {
     }
 }
 ```
+
+Let's check our browser again to make sure there are no error and that our styles are showing up correctly for out new header content. It should look something like this.
+
+<img alt="Application after completing Phase 1.2" src="images/phase1.2-complete.png" />
 
 ### Phase 1.3: Footer Markup and Styling
 
