@@ -493,7 +493,7 @@ If you look in your browser window with the application running it should look s
 
 ### Phase 1.2: Header Markup and Styling
 
-In **Phase 1.2** were gonna update our application page content by creating header content that will include a logo, text (that tells us what the application is), and navigation. This concept of all of this content at the top of the page within a solid color block is referred to as an App Bar. We'll need to make edits to the files listed below.
+In **Phase 1.2** we're gonna update our application page content by creating header content that will include a logo, text (that tells us what the application is), and navigation. This concept of all of this content at the top of the page within a solid color block is referred to as an App Bar. We'll need to make edits to the files listed below.
 
 **Editing (files):**
 
@@ -651,6 +651,15 @@ Let's check our browser again to make sure there are no error and that our style
 
 ### Phase 1.3: Footer Markup and Styling
 
+In **Phase 1.3** we're gonna update our application page content by creating footer content that will simply be a copyright statement that says, "© Todo List 2019". Our layout styling is already taking care of forcing our footer content to the bottom of the page but we'll also add som decorative styles to give it some visual presence.
+
+**Editing (files):**
+
+* `App.js` - located at `./src/components/App/App.js`
+* `App.css` - located at `./src/components/App/App.css`
+
+The below code snippet has all of the styling we'll use for the footer. Copy the code snippet and paste it to your `App.css` for your Todo List application.
+
 ```CSS
 /* ----------------------------------------------------------------------
 App Base
@@ -684,6 +693,8 @@ App Base
 
 ```
 
+With our styling in place let's update the footer content in the `App.js` JSX content. You can see the code updates in the snippet below. Please note that the header content has been replaced with `{/* ... HEADER JSX CODE (see Phase 1.2) ... */}` in the code snippet only to save space your file should have the actual content. We will see this several times throughout this tutorial.
+
 ```JS
 class App extends Component {
     render() {
@@ -705,6 +716,10 @@ class App extends Component {
     }
 }
 ```
+
+That's not a lot of content but if we look out our application in the browser that styling we implemented helps to give the footer content more visual presence.
+
+<img alt="Application after completing Phase 1.3" src="phase1.3-complete.png" />
 
 ### Phase 1.4: Landing Page Content and Styling
 
