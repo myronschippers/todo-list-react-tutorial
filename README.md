@@ -332,6 +332,8 @@ This application is going to be a todo list but it's gonna have some very specif
         * List of custom todo lists
         * Individual Custom Todo List Each shows the list's name and the percentage of completion and a button that says "Open"
 
+If you want to see a working version of this application you can checkout the [Sample Todo List](https://github.com/myronschippers/todo-list-app). It's branch structure is outlined in the `README.md` for that repo but at a high level just be aware that there is a branch for every phase that changes that state of that repo to what it would be at the end of that particular phase.
+
 ## Phase 1: Scaffolding our Application
 
 We'll be putting together the overall master layout for the Todo List application. In this phase we will also be stubbing in all of the pages we'll need and hook up the Front-End routes needed to navigate to the different pages.
@@ -344,6 +346,10 @@ We'll be putting together the overall master layout for the Todo List applicatio
 ### Phase 1.1: Adding Layout Markup JSX
 
 In Phase 1.1 we'll create the master layout that will established the major structure for our application. It will give us an opportunity to talk a little bit more about what JSX is because `create-react-app` sets up our build to accept JSX in our React Javascript code.
+
+**Sample Repo Branch:**
+
+* [Todo after Phase 1.1](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-1)
 
 **Editing (files):**
 
@@ -489,11 +495,16 @@ class App extends Component {
 
 If you look in your browser window with the application running it should look something like this.
 
+[Code Sample](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-1)
 <img alt="Completing Phase 1.1" src="images/phase1.1-complete.png" />
 
 ### Phase 1.2: Header Markup and Styling
 
 In **Phase 1.2** we're gonna update our application page content by creating header content that will include a logo, text (that tells us what the application is), and navigation. This concept of all of this content at the top of the page within a solid color block is referred to as an App Bar. We'll need to make edits to the files listed below.
+
+**Sample Repo Branch:**
+
+* [Todo after Phase 1.2](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-2)
 
 **Editing (files):**
 
@@ -647,11 +658,16 @@ class App extends Component {
 
 Let's check our browser again to make sure there are no error and that our styles are showing up correctly for out new header content. It should look something like this.
 
+[Code Sample](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-2)
 <img alt="Application after completing Phase 1.2" src="images/phase1.2-complete.png" />
 
 ### Phase 1.3: Footer Markup and Styling
 
 In **Phase 1.3** we're gonna update our application page content by creating footer content that will simply be a copyright statement that says, "© Todo List 2019". Our layout styling is already taking care of forcing our footer content to the bottom of the page but we'll also add som decorative styles to give it some visual presence.
+
+**Sample Repo Branch:**
+
+* [Todo after Phase 1.3](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-3)
 
 **Editing (files):**
 
@@ -719,11 +735,16 @@ class App extends Component {
 
 That's not a lot of content but if we look out our application in the browser that styling we implemented helps to give the footer content more visual presence.
 
+[Code Sample](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-3)
 <img alt="Application after completing Phase 1.3" src="phase1.3-complete.png" />
 
 ### Phase 1.4: Landing Page Content and Styling
 
 In **Phase 1.4** we're gonna update our application **PAGE BODY** content by creating a splash image that takes up the entire body content area and has text with a button sitting on top of the splash image.
+
+**Sample Repo Branch:**
+
+* [Todo after Phase 1.4](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-4)
 
 **Editing (files):**
 
@@ -845,15 +866,443 @@ class App extends Component {
 
 We should now have what looks like a full application in our web browser. Unfortunately there is no content yet but we'll get there.
 
+[Code Sample](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-4)
 <img alt="Application after completing Phase 1.4" src="phase1.4-complete.png" />
 
-### Phase 1.5: Componentize Application Header
+### Phase 1.5: Componentize Hero for Landing Page
 
-### Phase 1.6: Componentize Application Footer
+With all of the content in place for the master layout, header, footer, and landing page we can now talk about a key process in React. Most refer to it as componentizing. This is where we take the content we have in place and break it out into different components. You can choose to do this for a bunch of different reasons like reuse, maintenance, separation of concerns, and many others. For **Phase 1.5** we'll start by componentizing the splash image content for the page body that will eventually make up our Landing page.
 
-### Phase 1.7: Componentize Hero for Landing Page
+**Sample Repo Branch:**
 
-### Phase 1.8: Setup React Router and Create "Landing", "Daily", "Categories", & "Dashboard" Pages
+* [Todo after Phase 1.5](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-5)
+
+**Editing (files):**
+
+* `App.js` - `./src/components/App/App.js`
+* `App.css` - `./src/components/App/App.css`
+
+**Adding (files):**
+
+* `SplashImg.js` - `./src/components/SplashImg/SplashImg.js`
+* `splash.css` - `./src/components/SplashImg/splash.css`
+* `Template.js` - `./src/components/Template/Template.js`
+
+Let's examine our code and see what all makes up the page body content for the splash image used for the Landing page.
+
+```JS
+<div className="splash">
+    <div className="splash-content">
+        <h2 className="splash-content-hdg">Keep yourself organized</h2>
+        <button className="btn btn_big">Get Started</button>
+    </div>
+</div>
+```
+
+For now let's simply extract this code into a new React component. Start by creating a new Javascript file for the component (`./src/components/SplashImg/SplashImg.js`).
+
+```JS
+import React, { Component } from 'react';
+
+class SplashImg extends Component {
+    render() {
+        return (
+            <div className="splash">
+                <div className="splash-content">
+                    <h2 className="splash-content-hdg">Keep yourself organized</h2>
+                    <button className="btn btn_big">Get Started</button>
+                </div>
+            </div>
+        );
+    }
+}
+
+export default SplashImg;
+```
+
+Because this is such a specialized component let's extract the styles from `App.css` as well. The styling is actually comprised of both the `.splash` and `.btn` style modules. The button styling however might be something we might want to use in other places so let's leave that in `App.css` and just move the `.splash` styles into a new file at `./src/SplashImg/splash.css`.
+
+`splash.css`:
+
+```CSS
+/* ----------------------------------------------------------------------
+Splash
+---------------------------------------------------------------------- */
+
+.splash {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 20px;
+    background: url("/images/street-in-motion.jpg");
+    background-position: center bottom;
+    background-size: cover;
+    position: relative;
+}
+
+.splash:before {
+    content: " ";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgb(0, 0, 0, 0.4);
+}
+
+.splash-content {
+    width: 400px;
+    max-width: 70%;
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    transform: translate(0, -100%);
+    color: #ffffff;
+}
+
+.splash-content-hdg {
+    margin: 0 0 30px;
+    font-size: 2.3rem;
+    font-weight: 400;
+    color: #f0f8ff;
+    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
+}
+```
+
+Import the `splash.css` into `SplashImg.js`:
+
+```JS
+import React, { Component } from 'react';
+import './splash.css';
+```
+
+Take note that our splash styles got imported by simply using the path like so `import './splash.css';`. We saw this in `App.js` with the importing of `App.css`. The styles don't need to be used in a specific spot in our Javascript we just simply need to make sure our bundler is including it when a specific component is being used so we just need to import the file path. This will ensure our styles are being included.
+
+With the new component all packaged up we can replace the content in the `App.js` body content area with the new SplashImg component.
+
+Import our new component:
+
+```JS
+import React, { Component } from 'react';
+import SplashImg from '../SplashImg/SplashImg';
+
+import logo from './logo.svg';
+import './App.css';
+```
+
+Replace the splash content with the newly imported component:
+
+```JS
+<SplashImg />
+```
+
+If we double check the browser at this point the site should look exactly the same as before. This is a straight forward way to simply separate out the splash image code and even potentially reuse it. How do we make it more flexible though? What if we wanted to change out the image being used in the background or the text that is overlaid on top of the image. This is where component **props** come in. This is a feature of React components that allow us to pass custom data to our components.
+
+We'll start by making the heading and button class editable using props. These props get passed to the component by creating a custom attribute on the custom component element in our `App.js`.
+
+```JS
+    ...
+</div>
+<div className="scaffold-bd">
+    <SplashImg hdgText="Keep yourself organized" btnText="Get Started" />
+</div>
+<div className="scaffold-ft">
+    ...
+```
+
+These custom attributes can now be used inside of our component by calling to `this.props.hdgText` and `this.props.btnText`. The React `Component` that we are using as our base ensures that all of these custom attributes get attached to `this.props`. Let's try replacing the text content with these props.
+
+```JS
+class SplashImg extends Component {
+    render() {
+        return (
+            <div className="splash">
+                <div className="splash-content">
+                    <h2 className="splash-content-hdg">{this.props.hdgText}</h2>
+                    <button className="btn btn_big">{this.props.btnText}</button>
+                </div>
+            </div>
+        );
+    }
+}
+```
+
+The page should look the same but let's try changing the value on our `btnText` prop to "Jump In" instead of "Get Started". We should see the text for the button on the rendered page get updated. Finally let's see how we can update the image being used in the background.
+
+Add a new attribute for a background image prop (`bgImg`):
+
+```JS
+    ...
+</div>
+<div className="scaffold-bd">
+    <SplashImg hdgText="Keep yourself organized" btnText="Get Started" bgImg="street-in-motion.jpg" />
+</div>
+<div className="scaffold-ft">
+    ...
+```
+
+With this many attributes the element is getting a little long. We can break it up a little bit by putting each of the attributes on a separate line.
+
+```JS
+    ...
+</div>
+<div className="scaffold-bd">
+    <SplashImg
+        hdgText="Keep yourself organized"
+        btnText="Get Started"
+        bgImg="street-in-motion.jpg"
+    />
+</div>
+<div className="scaffold-ft">
+    ...
+```
+
+This will give us access to the image file name in the Javascript but we can't use that in our CSS directly so we'll need to leverage inline styles even though I loath inline styles. For this particular instance it's our best method.
+
+```JS
+class SplashImg extends Component {
+    render() {
+        const splashStyling = {
+            backgroundImage: `background-image: url("/images/${this.props.bgImg}")`,
+        };
+
+        return (
+            <div className="splash"
+                style={splashStyling}
+            >
+                <div className="splash-content">
+                    <h2 className="splash-content-hdg">{this.props.hdgText}</h2>
+                    <button className="btn btn_big">{this.props.btnText}</button>
+                </div>
+            </div>
+        );
+    }
+}
+```
+
+The implementation for a style attribute looks different from a normal attribute. Style attribute properties have to be implemented as an object. The style attribute won't accept a string value but only an object and you will see an error displayed on in the browser reflecting such. 
+
+
+### Phase 1.6: Setup React Router and Create "Landing", "Daily", "Categories", & "Dashboard" Pages
+
+With the page content componentized it will be easier to setup the various pages for our application. In **Phase 1.6** we'll be setting up the Front-End router for our application and stubbing in the pages that will eventually be needed in our Todo List application.
+
+**Sample Repo Branch:**
+
+* [Todo after Phase 1.6](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-6)
+
+**Editing (files):**
+
+* `App.js` - `./src/components/App/App.js`
+
+**Adding (files):**
+
+* `LandingPage.js` - `./src/components/LandingPage/LandingPage.js`
+* `DailyListPage.js` - `./src/components/DailyPage/DailyPage.js`
+* `CustomListsPage.js` - `./src/components/CustomListsPage/CustomListsPage.js`
+* `CustomListDetailPage.js` - `./src/components/CustomListsPage/CustomListDetailPage.js`
+* `DashboardPage.js` - `./src/components/DashboardPage/DashboardPage.js`
+
+For our pages we need to start talking about the `react-router-dom` dependencies that we installed during the setup of our project. There are a few different components we'll need to make sure we have access to when we import the `react-router-dom` dependencies. 
+
+```JS
+import React, { Component } from 'react';
+import SplashImg from '../SplashImg/SplashImg';
+import {
+    HashRouter as Router,
+    Route,
+    Link,
+} from 'react-router-dom';
+```
+
+We will use the `<Router>` component to wrap the entire `App.js` content so that it is the outer most element. This will give us our shell for the router allowing us to load particular content up based on the hash in our URL route.
+
+```JS
+class App extends Component {
+    render() {
+        return (
+            <Router>
+                <div className="scaffold">
+                    <div className="scaffold-hd">
+                        {/* ... HEADER (see Phase 1.3) ... */}
+                    </div>
+                    <div className="scaffold-bd">
+                        <SplashImg hdgText="Keep yourself organized" btnText="Get Started" />
+                    </div>
+                    <div className="scaffold-ft">
+                        {/* ... FOOTER (see Phase 1.3) ... */}
+                    </div>
+                </div>
+            </Router>
+        );
+    }
+}
+```
+
+Now we need page that we can hook up to our router. We are going to create 5 files, one for each of our pages. They will each look very similar apart from their text content will be that of the individual pages name. Let's start with the landing page and then I will give you a list of the rest of the pages to do on your own. If you run up against some trouble take a look at the [Sample Code](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-6).
+
+Create `LandingPage.js` component as a new file at `./src/components/LandingPage/LandingPage.js` with the following code:
+
+```JS
+import React, { Component } from 'react';
+
+class LandingPage extends Component {
+    render() {
+        return (
+            <div>
+                LANDING PAGE
+            </div>
+        );
+    }
+}
+
+export default LandingPage;
+```
+
+A couple of things to keep in mind with these class component declarations is that the name of the class will usually mirror the the name of the Javascript file. This helps with organization and to know that at a glance we're working with a class component (classes are named in uppercase camel case).
+
+Repeat the steps that you just executed for creating the `LandingPage.js` for the othe four pages we're going to need in our `DailyTodosPage.js`, `CustomTodosPage.js`, `CustomTodosDetailPage.js`, and `DashboardPage.js`.
+
+**Create all pages:**
+
+1. `./src/components/DailyTodosPage/DailyTodosPage.js`
+1. `./src/components/CustomTodosPage/CustomTodosPage.js`
+1. `./src/components/CustomTodosDetailPage/CustomTodosDetailPage.js`
+1. `./src/components/DashboardPage/DashboardPage.js`
+
+CREATE THE PAGE COMPONENTS ON YOUR OWN...
+
+At this point you should have all of your pages stubbed in as components but we're not using any of them in our application yet. We'll be addressing how to use these new components as Front-End routes. What is a Front-End route in our browser though? We are most used to seeing routes like `http://www.website.com/page` but if this website were leveraging a Front-End route for `/page` instead of the server we would use something called a hash route. A hash route is everything that comes after `/#` in your browser URL. Making the `/page` route into a Front-End route would look like `http://www.website.com/#/page`. How do we get react to leverage these hash routes? I'm glad you asked.
+
+We will leverage the `Router`, `Route`, and `Link` components that were imported from the `react-router-dom` dependency. The `<Router>` component was already added to the application wrapping all of our content. As we place `<Route />` components in our `App.js` keep in mind that each of these represents a hash route that we want to use and tells us what content to load up for that particular route.
+
+Let's make the home or landing page route. Add a `<Route />` component just above our `<SplashImg />` component.
+
+```JS
+    ...
+</div>
+<div className="scaffold-bd">
+    <Route />
+    <SplashImg hdgText="Keep yourself organized" btnText="Get Started" />
+</div>
+<div className="scaffold-ft">
+    ...
+```
+
+`<Route />` accepts different props but we're only going to be concerned with `path` and `component` for now. The `path` prop is a string value that represents the hash route that we want our content to load up at. The `component` prop takes in the physical component that you have imported and represents that actual content you want to load at that particular hash route. Before updating these attributes make sure to import the `LandingPage.js` component. 
+
+```JS
+import {
+    HashRouter as Router,
+    Route,
+    Link,
+} from 'react-router-dom';
+import LandingPage from '../LandingPage/LandingPage';
+```
+
+Add `path="/landing"` and `component={LandingPage}` to the `<Route />` component and we're going to remove the `<SplashImg />` component.
+
+```JS
+    ...
+</div>
+<div className="scaffold-bd">
+    <Route path="/landing" component={LandingPage} />
+</div>
+<div className="scaffold-ft">
+    ...
+```
+
+You will notice your browser has no body content anymore but if we navigate to `http://localhost:3000/#/landing` in your URL you will see the "LANDING PAGE" text that we entered in on our stubbed in component. YAY, we made a new page!!! With the page in place we can update the `path` so that `LandingPage.js` will load up as our home/landing page.
+
+```JS
+    ...
+</div>
+<div className="scaffold-bd">
+    <Route path="/" component={LandingPage} />
+</div>
+<div className="scaffold-ft">
+    ...
+```
+
+But we really want our `<SplashImg />` component to show up so let's go over to our `LandingPage.js` and replace the "**LANDING PAGE**" text with our `<SplashImg />` component. 
+
+**in `./src/components/LandingPage/LandingPage.js`:**
+
+```JS
+import React, { Component } from 'react';
+import SplashImg from '../SplashImg/SplashImg';
+
+class LandingPage extends Component {
+    render() {
+        return (
+            <SplashImg hdgText="Keep yourself organized" btnText="Get Started" />
+        );
+    }
+}
+
+export default LandingPage;
+```
+
+That's great no our splash image shows up and our home page is all set. How about we add another page to our application. Import your `DailyTodosPage.js` into `App.js` first so we can make our Daily todos route.
+
+```JS
+import React, { Component } from 'react';
+import {
+    HashRouter as Router,
+    Route,
+    Link,
+} from 'react-router-dom';
+import LandingPage from '../LandingPage/LandingPage';
+import DailyTodosPage from '../DailyTodosPage/DailyTodosPage';
+```
+
+With our page component imported go ahead and add the new `<Route />` for Daily todos.
+
+```JS
+    ...
+</div>
+<div className="scaffold-bd">
+    <Route path="/" component={LandingPage} />
+
+    <Route path="/daily-todos" component={DailyTodosPage} />
+</div>
+<div className="scaffold-ft">
+    ...
+```
+
+With that in place let's go ahead and test our new page by navigating to `http://localhost:3000/#/daily-todos`.
+
+### Phase 1.7: Componentize Application Header
+
+In **Phase 1.7** 
+
+**Sample Repo Branch:**
+
+* [Todo after Phase 1.7](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-7)
+
+**Editing (files):**
+
+* fileName - filePath
+
+**Adding (files):**
+
+* fileName - filePath
+
+### Phase 1.8: Componentize Application Footer
+
+Short Description
+
+**Sample Repo Branch:**
+
+* [Todo after Phase 1.8](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-8)
+
+**Editing (files):**
+
+* fileName - filePath
+
+**Adding (files):**
+
+* fileName - filePath
 
 ## Phase 2: Creating Daily Todo List
 
