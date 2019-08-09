@@ -587,3 +587,80 @@ Let's check our browser again to make sure there are no errors and that our styl
 
 [Code Sample](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-2)
 <img alt="Application after completing Phase 1.2" src="images/phase1.2-complete.png" />
+
+
+### Phase 1.3: Footer Content and Styling
+
+In **Phase 1.3** we're gonna update our application page content by creating footer content that will simply be a copyright statement that says, "© Todo List 2019". Our layout styling is already taking care of forcing our footer content to the bottom of the page but we'll also add some decorative styles to give the footer visual presence.
+
+**Sample Repo Branch:**
+
+* [Todo after Phase 1.3](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-3)
+
+**Editing (files):**
+
+* `App.js` - located at `./src/components/App/App.js`
+* `App.css` - located at `./src/components/App/App.css`
+
+Here is the JSX changes we'll need to make to replace the "FOOTER" text placeholder we currently have for the footer content. Please be aware that you will see `{/* ... HEADER JSX CODE (see Phase 1.2) ... */}` in the below code and that that is just to help consolidate the code we are looking at. We want to focus on the footer content for **Phase 1.3**.
+
+*in `App.js`:*
+
+```JS
+class App extends Component {
+    render() {
+        return (
+            <div className="scaffold">
+                <div className="scaffold-hd">
+                    {/* ... HEADER JSX CODE (see Phase 1.2) ... */}
+                </div>
+                <div className="scaffold-bd">
+                    PAGE BODY
+                </div>
+                <div className="scaffold-ft">
+                    <footer className="appBase">
+                        &copy; Todo List 2019
+                    </footer>
+                </div>
+            </div>
+        );
+    }
+}
+```
+
+We aren't using any new JSX or React feature for the footer content so let's go ahead and update our `App.css` by adding the footer styling to the bottom of the stylesheet.
+
+*in `App.css`:*
+
+```CSS
+/* ----------------------------------------------------------------------
+App Base
+---------------------------------------------------------------------- */
+
+.appBase {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 15px 20px 20px;
+    background: #f8f8ff;
+    font-size: 0.8rem;
+    text-align: center;
+
+    position: relative;
+}
+
+.appBase:before {
+    content: " ";
+    width: 70%;
+    height: 1px;
+    border-radius: 1px;
+    background: #c0c0c0;
+
+    /* CSS Centering */
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%, 0);
+}
+
+```
