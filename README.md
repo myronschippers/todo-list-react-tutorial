@@ -304,4 +304,151 @@ Every master layout consists of the same three things a Header, Footer, and Main
 
 * `App.js` - located at `./src/components/App/App.js`
 * `App.css` - located at `./src/components/App/App.css`
+* `index.css` - located at `./src/index.css`
 * `index.html` - located at `./public/index.html`
+
+We are going to use something called [JSX](https://reactjs.org/docs/introducing-jsx.html) to help us write some HTML elements in our Javascript. JSX is a syntax extension to Javascript and it produces React "element". You can think of it as a way to write HTML in our Javascript. It is extremely handy when using React.
+
+**Example JSX:**
+
+```JSX
+const element = <h1>Hello, world!</h1>;
+```
+
+Open up `./src/components/App/App.js` so we can begin to flesh out our application elements. Lets start by removing all of the existing markup except the outer most `<div>` and then I can highlight some of what is going on here.
+
+```JS
+import React, { Component } from 'react';
+import logo from './logo.svg';
+import './App.css';
+
+class App extends Component {
+    render() {
+        return (
+            <div className="scaffold">
+            </div>
+        );
+    }
+}
+
+export default App;
+```
+
+A React Component is created with `class App extends Component` and every class based React Component `extends` the React base Component class to allow access to all of the special React things. Every React component class also must have a `render()` method. The build system will actually throw an error if you do not have one as well as a `return` inside of your `render()` method. Whatever is being returned is what will render as part of your view. All of your JSX normally goes in the `return` but it doesn't have to. You may have cases where you need to conditionally render something and might use the JSX just before the `return` still in the `render()` method.
+
+Another difference you will notice in JSX is the addition of something called `className` it may seem like there is some magic going on there like with our `<div className="scaffold">` but this is just an element attribute representing the `class` attribute we are used to seeing. If you want to add a class(es) to an element you'll need to use the `className` attribute instead.
+
+```JS
+class App extends Component {
+    render() {
+        return (
+            <div className="scaffold">
+                STUFF
+            </div>
+        );
+    }
+}
+```
+
+**Outputs HTML:**
+
+```HTML
+<div class="scaffold">
+    STUFF
+</div>
+```
+
+I am going to supply you with the HTML markup and styling so that we can expedite the process of setting up the initial content. This initial markup is going to be just an initial layout. Once the mark up is in place we'll begin to look at how we "Componentize" the application and what that means.
+
+First we'll need to add a class to our `index.html` file. This class is specifically for the CSS layout architecture.
+
+**Change from:**
+
+```HTML
+<div id="root"></div>
+```
+
+**to be:**
+
+```HTML
+<div id="root" class="scaffoldPrimer"></div>
+```
+
+We have removed the content that `create-react-app` stubs in for us and put in it's place a `<div>` with the content of **STUFF** but now we need to add in those three major master layout areas to our `App.js` JSX content. All we're doing is setting up an HTML structure where we have places for the Header, Footer, and the Main Body content for our application. Eventually the `App.js` component will become our master template.
+
+**In `App.js`:**
+
+```JS
+class App extends Component {
+    render() {
+        return (
+            <div className="scaffold">
+                <div className="scaffold-hd">
+                    HEADER
+                </div>
+                <div className="scaffold-bd">
+                    MAIN BODY
+                </div>
+                <div className="scaffold-ft">
+                    FOOTER
+                </div>
+            </div>
+        );
+    }
+}
+```
+
+With the markup / JSX in place to give our master layout structure, let's add the styling. Starting out in the `./src/index.css` replace all of the existing styles with the following.
+
+```CSS
+html,
+body {
+	height: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	font-family: 'Open Sans', 'Segoe UI', Tahoma, Geneva, Arial, sans-serif;
+}
+```
+
+These styles are specifically getting added to the `index.css` because they are base level element styles. Our next set of styling will be replacing all of the styles in `App.css`.
+
+```CSS
+/* ----------------------------------------------------------------------
+Scaffold Primer
+---------------------------------------------------------------------- */
+
+.scaffoldPrimer {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+/* ----------------------------------------------------------------------
+Scaffold
+---------------------------------------------------------------------- */
+
+.scaffold {
+	display: flex;
+	height: 100%; /* needed for IE10 */
+	min-height: 100%;
+	flex-direction: column;
+}
+
+.scaffold-hd {
+	flex: 0 0 auto;
+}
+
+.scaffold-bd {
+	flex: 1 0 auto;
+}
+
+```
+
+These styles are module specific styling that force the footer content to the bottom of our browser window even if the Main Body content of the page isn't enough content to push the footer to the bottom of the page. If you take a look at the browser where the application is currently loaded up you should see this styling in action. At this point the application should look something like this.
+
+[Code Sample](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-1)
+<img alt="Completing Phase 1.1" src="images/phase1.1-complete.png" />
