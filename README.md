@@ -287,3 +287,21 @@ In **Phase 1** we will complete all of the requirements we have been given inclu
 * Passing Data to Components via Props
 * Working with JSX
 * Directory composition
+
+### Phase 1.1: Setting Up Master Layout
+
+In **Phase 1.1** we'll create the master layout that will established the major structure for our application. It will give us an opportunity to talk a little bit more about what JSX is because `create-react-app` sets up our build to accept JSX in our React Javascript code.
+
+Every master layout consists of the same three things a Header, Footer, and Main Body content areas. This configuration may change a little bit from project to project 90% of the time this is the core of our master layout. In some case you need navigation but our application doesn't require a navigation so that's not something we have to worry about.
+
+**Sample Repo Branch:**
+
+* [Todo after Phase 1.1](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-1)
+
+### Phase 1.1: Setting Up Master Layout
+
+**Editing (files):**
+
+* `App.js` - located at `./src/components/App/App.js`
+* `App.css` - located at `./src/components/App/App.css`
+* `index.html` - located at `./public/index.html`
