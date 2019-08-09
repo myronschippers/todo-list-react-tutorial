@@ -664,3 +664,8 @@ App Base
 }
 
 ```
+
+That's not a lot of content but if we look out our application in the browser that styling we implemented helps to give the footer content more visual presence.
+
+[Code Sample](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-3)
+<img alt="Application after completing Phase 1.3" src="phase1.3-complete.png" />
