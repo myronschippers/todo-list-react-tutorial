@@ -269,7 +269,7 @@ import logo from './logo.svg';
 import './App.css';
 ```
 
-In the below code snippet we see the entire App component code but all we're updating is the JSX for the markup displayed to the user in place of the `HEADER` text we hand in there as a placeholder before.
+In the below code snippet we see the entire App component code but all we're updating is the JSX for the markup displayed to the user in place of the `HEADER` text we hand in there as a placeholder before. This new content starts with the `<header className="appBar">` element.
 
 ```JS
 class App extends Component {
@@ -311,7 +311,7 @@ class App extends Component {
 }
 ```
 
-Let's check our browser again to make sure there are no error and that our styles are showing up correctly for out new header content. It should look something like this.
+Let's check our browser again to make sure there are no errors and that our styles are showing up correctly for our new header content. It should look something like this.
 
 [Code Sample](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-2)
 <img alt="Application after completing Phase 1.2" src="images/phase1.2-complete.png" />

@@ -452,3 +452,138 @@ These styles are module specific styling that force the footer content to the bo
 
 [Code Sample](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-1)
 <img alt="Completing Phase 1.1" src="images/phase1.1-complete.png" />
+
+### Phase 1.2: Header Markup and Styling
+
+In **Phase 1.2** we're gonna update our application page content by creating the header content that will include a logo and name of the application. This concept of all of this content at the top of the page within a solid color block is referred to as an **App Bar** in most design/web shops.
+
+**Sample Repo Branch:**
+
+* [Todo after Phase 1.2](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-2)
+
+**Editing (files):**
+
+* `App.js` - located at `./src/components/App/App.js`
+* `App.css` - located at `./src/components/App/App.css`
+
+One of the things we'll leverage from the React content that `create-react-app` stubbed in for us is the React Logo SVG. We left the logo import at the to of the `App.js` where it says `import logo from './logo.svg';`. When the logo is imported we store it in the `logo` variable so we can use it in our JSX later on. 
+
+```JS
+import React, { Component } from 'react';
+import logo from './logo.svg';
+import './App.css';
+```
+
+In the below code snippet we see the entire App component code but all we're updating is the JSX for the markup displayed to the user in place of the `HEADER` text we hand in there as a placeholder before. This new content starts with the `<header className="appBar">` element.
+
+```JS
+class App extends Component {
+    render() {
+        return (
+            <div className="scaffold">
+                <div className="scaffold-hd">
+                    <header className="appBar">
+                        <div className="appBar-identity">
+                            <img src={logo} className="logoIcon" alt="logo" />
+                            <h1 className="primeHdg">Todo List</h1>
+                        </div>
+                    </header>
+                </div>
+                <div className="scaffold-bd">
+                    MAIN BODY
+                </div>
+                <div className="scaffold-ft">
+                    FOOTER
+                </div>
+            </div>
+        );
+    }
+}
+```
+
+Let's take a look at some of what is going on in our JSX code. Take particular notice of the `<img>` tag inside of `<div className="appBar-identity">`. For our `src` attribute you'll notice that we are using curly brackets after the `=` instead of quotes like in our standard HTML. We open up curly brackets (`src={}`) any time we want to insert Javascript into our JSX. This is a generalization but it's a good way to think about it. In this particular scenario it's the `logo` that we have imported with Javascript that we want to ser as the `src={log}` for our logo.
+
+The other thing you may have noticed is that we aren't using a `class` attribute on our elements but are instead using an attribute of `className`. In JSX if we want to add a class for styling an element we have to use `<div className="style-class">`.
+
+If we had stored a set of class names in a variable:
+
+*example code not part of application:*
+
+```JS
+render() {
+    const largeBtn = 'btn btn_big';
+
+    return (
+```
+
+we could use that variable for the value of the class name:
+
+*example code not part of application:*
+```JS
+render() {
+    const largeBtn = 'btn btn_big';
+
+    return (
+        <div className={largeBtn}>
+```
+
+This approach becomes particularly helpful when we need to conditionally alter the classes being used on our elements.
+
+All of our markup is in place but let's add some styling to the bottom of `App.css` in order to make our header content look a little more like an application.
+
+```CSS
+/* ----------------------------------------------------------------------
+App Bar
+---------------------------------------------------------------------- */
+
+.appBar {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 20px 0;
+    background: #4682B4;
+    box-shadow: 0px 2px 6px rgb(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 800;
+}
+
+.appBar-identity {
+    padding: 6px 0;
+    color: #f0f8ff;
+}
+
+.appBar-actions {
+    padding: 0;
+}
+
+/* ----------------------------------------------------------------------
+Primary Heading (app bar content)
+---------------------------------------------------------------------- */
+
+.primeHdg {
+    display: inline-block;
+    margin: 0;
+    padding: 0 4px;
+    font-size: 1.4rem;
+    vertical-align: middle;
+}
+
+/* ----------------------------------------------------------------------
+Logo Icon (app bar content)
+---------------------------------------------------------------------- */
+
+.logoIcon {
+    display: inline-block;
+    width: 3.5rem;
+    vertical-align: middle;
+}
+
+```
+
+Let's check our browser again to make sure there are no errors and that our styles are showing up correctly for our new header content. It should look something like this.
+
+[Code Sample](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-2)
+<img alt="Application after completing Phase 1.2" src="images/phase1.2-complete.png" />
