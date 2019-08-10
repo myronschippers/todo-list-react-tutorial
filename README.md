@@ -669,3 +669,213 @@ That's not a lot of content but if we look out our application in the browser th
 
 [Code Sample](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-3)
 <img alt="Application after completing Phase 1.3" src="phase1.3-complete.png" />
+
+### Phase 1.4: Componentizing Header and Footer Content
+
+In **Phase 1.4** we'll be looking at a new term **Componentize** and what that means. Putting it into practice I will show you how to componentize the Header content and then you'll try componentizing the footer content on your own.
+
+**Sample Repo Branch:**
+
+* [Todo after Phase 1.3](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-3)
+
+**Editing (files):**
+
+* `App.js` - `./src/components/App/App.js`
+* `App.css` - `./src/components/App/App.css`
+
+**Adding (files):**
+
+* `Header.js` - `./src/components/Header/Header.js`
+* `Header.css` - `./src/components/Header/Header.css`
+
+What is Componentizing? React as a framework is a component based framework. This means that it is built on this idea that everything is a component and that each one of those components is a self contained entity with it's own *local state* (more on this later). Because they are self contained blocks of code we can create it once and then reuse it all over the place. Later we'll even see how we can pass data down to components through *props* to make them unique even though we are reusing a single component.
+
+When we start componentizing something we have to make a new Javascript component file. Create a file called `Header.js` in a new `./src/components/Header` directory.
+
+Inside of `Header.js` let's stub in the basic things needed for every React component.
+
+*in `Header.js`:*
+
+```JS
+import React, { Component } from 'react';
+
+class Header extends Component {
+    render() {
+        return (
+            <div>
+                CONTENT
+            </div>
+        );
+    }
+}
+
+export default Header;
+```
+
+If we break this down we see some thing that are the same as the `App.js` component. Most importantly we are importing React and Component at the top of our file. This `React, { Component }` is providing us a short hand for `Component` when we use it to create our component class. We could jus as easily have our import be `import React from 'react'` and then our class definition would look like this `class Header extends React.Component {` so this is just a code styling choice and how you will see me setup all of the components in this tutorial.
+
+When defining the the React class we are using Javascript ES6 to extend our `Header` class from React's `Component` class. This is how we get access to all of React's component functionality and without extending from the `Component` class we would just have a basic Javascript class.
+
+The next two things that you will see on every React class based component is a `render()` method and a `return` in the `render()`. React will throw an error if these things are not in place and your React will not build so make sure they're there. If you have worked with Javascript before (and I hope you have) you will also notice that the `return` has `();` after it. This is a React/JSX thing that defines the area in which your outputted render markup can go, in our case this is JSX. 
+
+The last thing to be aware of for every component is that you must have a single element wrapping all of your content in the return. In the below *example 1* code there are two sibling elements without an element wrapping them and this code will not build throwing an error at you. Below *example 2* is the correct way of writing it with a single element wrapping all of the content.
+
+*example 1 (not valid):*
+
+```JS
+render() {
+    return (
+        <div>
+            CONTENT
+        </div>
+        <div>
+            MORE CONTENT
+        </div>
+    );
+}
+```
+
+*example 2 (valid):*
+
+```JS
+render() {
+    return (
+        <div>
+            <div>
+                CONTENT
+            </div>
+            <div>
+                MORE CONTENT
+            </div>
+        </div>
+    );
+}
+```
+
+With these React and JSX features in mind let's remove our header content from `App.js` and put it into our new `Header.js` component.
+
+```js
+class Header extends Component {
+    render() {
+        return (
+            <header className="appBar">
+                <div className="appBar-identity">
+                    <img src={logo} className="logoIcon" alt="logo" />
+                    <h1 className="primeHdg">Todo List</h1>
+                </div>
+            </header>
+        );
+    }
+}
+```
+
+If your IDE is on top of things it should be yelling at you (red underline) about `logo`. Remember the place we imported logo to was `App.js` so we're going to have to move the SVG to `./src/components/Header` and import it into `Header.js`.
+
+```JS
+import React, { Component } from 'react';
+import logo from './logo.svg';
+
+class Header extends Component {
+```
+
+This next step is optional but I would do it in order to separate concerns. We can extract the styling that is specific to our header and make a new stylesheet that we will import into our `Header.js` component.
+
+*create `Header.css` file in `./src/components/Header` directory:*
+
+```CSS
+/* ----------------------------------------------------------------------
+App Bar
+---------------------------------------------------------------------- */
+
+.appBar {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 20px 0;
+    background: #4682B4;
+    box-shadow: 0px 2px 6px rgb(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 800;
+}
+
+.appBar-identity {
+    padding: 6px 0;
+    color: #f0f8ff;
+}
+
+.appBar-actions {
+    padding: 0;
+}
+
+/* ----------------------------------------------------------------------
+Primary Heading (app bar content)
+---------------------------------------------------------------------- */
+
+.primeHdg {
+    display: inline-block;
+    margin: 0;
+    padding: 0 4px;
+    font-size: 1.4rem;
+    vertical-align: middle;
+}
+
+/* ----------------------------------------------------------------------
+Logo Icon (app bar content)
+---------------------------------------------------------------------- */
+
+.logoIcon {
+    display: inline-block;
+    width: 3.5rem;
+    vertical-align: middle;
+}
+
+```
+
+*import new `Header.css`:*
+
+```JS
+import React, { Component } from 'react';
+import logo from './logo.svg';
+import './Header.css';
+
+class Header extends Component {
+```
+
+Finally let's add our new component to `App.js` we will first need to import the component and then add the component element to our JSX. You will see the implementation of bot in the below code snippet.
+
+```JS
+import React, { Component } from 'react';
+import './App.css';
+
+// COMPONENTS
+import Header from '../Header/Header';
+
+class App extends Component {
+    render() {
+        return (
+            <div className="scaffold">
+                <div className="scaffold-hd">
+                    <Header />
+                </div>
+                <div className="scaffold-bd">
+                    MAIN BODY
+                </div>
+                <div className="scaffold-ft">
+                    <footer className="appBase">
+                        &copy; Todo List 2019
+                    </footer>
+                </div>
+            </div>
+        );
+    }
+}
+
+export default App;
+```
+
+We have a fully componentized header. Go ahead and try componentizing the footer on your own and if you run into trouble take a look at the [Sample Code](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-4) for **Phase 1.4**.
+
+
