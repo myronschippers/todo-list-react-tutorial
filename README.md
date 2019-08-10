@@ -676,7 +676,7 @@ In **Phase 1.4** we'll be looking at a new term **Componentize** and what that m
 
 **Sample Repo Branch:**
 
-* [Todo after Phase 1.3](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-3)
+* [Todo after Phase 1.4](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-4)
 
 **Editing (files):**
 
@@ -879,3 +879,88 @@ export default App;
 We have a fully componentized header. Go ahead and try componentizing the footer on your own and if you run into trouble take a look at the [Sample Code](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-4) for **Phase 1.4**.
 
 
+### Phase 1.5: Rendering a List
+
+In **Phase 1.5** we're gonna take a look at a very common pattern for rendering a list in React. Along with the component structure used to render the list we'll be taking a look at React's local state and how it works. It's common practice to create a series of 2 separate React components in order to render a list. The first component is for the list itself with the second component being a child component that is meant to handle the rendering and local state of the individual items in the list.
+
+**Sample Repo Branch:**
+
+* [Todo after Phase 1.5](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-5)
+
+**Editing (files):**
+
+* `App.js` - `./src/components/App/App.js`
+* `App.css` - `./src/components/App/App.css`
+
+**Adding (files):**
+
+* `TodoList.js` - `./src/components/TodoList/TodoList.js`
+* `TodoList.css` - `./src/components/TodoList/TodoList.css`
+* `TodoListItem.js` - `./src/components/TodoListItem/TodoListItem.js`
+* `TodoListItem.css` - `./src/components/TodoListItem/TodoListItem.css`
+
+We could always try building out the functionality of the Todo List first and then decide how to componentize but as mentioned before there is a very common pattern used when rendering lists with React components. Let's go ahead and create a new file for our Todo List.
+
+*create `./src/components/TodoList/TodoList.js` file:*
+
+```JS
+import React, { Component } from 'react';
+
+class TodoList extends Component {
+    render() {
+        return (
+            <div>
+                TODO LIST
+            </div>
+        );
+    }
+}
+
+export default TodoList;
+```
+
+We're gonna import the new `TodoList.js` into our `App.js` and create a static array as sample data to represent our list of todos. The array will be created not using the React state initially because I want to demonstrate how React's rendering works a little bit.
+
+```JS
+// COMPONENTS
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
+import TodoList from '../TodoList/TodoList';
+
+const sampleList = [
+    'Mail Letter',
+    'Wash Dishes',
+    'Cut Grass',
+];
+
+class App extends Component {
+    // ...
+```
+
+In the above code snippet we imported the `TodoList.js` and made our sample data array. The below code snippet has a few updates. An event handler method of `clickAddToList` was added to the `App` class. Then in the body area we are printing out the array to the page with `{JSON.stringify(sampleList)}`. React will not render out objects or arrays directly to the page so we are leveraging `JSON.stringify` in order to make it into a string.
+
+```JS
+class App extends Component {
+    clickAddToList(event) {
+        sampleList.push('Pick Up Dinner');
+    }
+
+    render() {
+        return (
+            <div className="scaffold">
+                <div className="scaffold-hd">
+                    <Header />
+                </div>
+                <div className="scaffold-bd">
+                    {JSON.stringify(sampleList)}
+                    <button onClick={this.clickAddToList}>Add Sample</button>
+                    <TodoList />
+                </div>
+                <div className="scaffold-ft">
+                    <Footer />
+                </div>
+            </div>
+        );
+    }
+}
+```
