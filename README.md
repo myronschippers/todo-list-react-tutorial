@@ -937,12 +937,13 @@ class App extends Component {
     // ...
 ```
 
-In the above code snippet we imported the `TodoList.js` and made our sample data array. The below code snippet has a few updates. An event handler method of `clickAddToList` was added to the `App` class. Then in the body area we are printing out the array to the page with `{JSON.stringify(sampleList)}`. React will not render out objects or arrays directly to the page so we are leveraging `JSON.stringify` in order to make it into a string.
+In the above code snippet we imported the `TodoList.js` and made our sample data array. Take note that the array is just a simple array of strings for now while we run this test. It will become an array of objects in its final form. The below code snippet has a few updates. An event handler method of `clickAddToList` was added to the `App` class. Then in the body area we are printing out the array to the page with `{JSON.stringify(sampleList)}`. React will not render out objects or arrays directly to the page so we are leveraging `JSON.stringify` in order to make it into a string. Just below the array string we are adding a `<button>` and attaching the event handler to the click event listener for the `<button>` by leveraging the `onClick` event listener that React provides for us.
 
 ```JS
 class App extends Component {
     clickAddToList(event) {
         sampleList.push('Pick Up Dinner');
+        console.log(sampleList);
     }
 
     render() {
@@ -963,4 +964,237 @@ class App extends Component {
         );
     }
 }
+```
+
+Give it a shot. Move over to your browser where the application is running and open up the browser's console. Try clicking on the button in your browser. You should notice that the array printing out in the console is getting updated but the one rendered to the page is not updating. This is because regardless of what updates are going on in the Javascript React doesn't re-render unless there is an update to React's state. Let's change the code around a little to have the `sampleList` stored on the `App` component's local state.
+
+Local state in a React component has to be an object with whatever properties we want to add to it. React components look at a property on the class called `state` in order to maintain local state. There are two different methods in which we can add the state property. We can leverage the class constructor or add the property directly to the class.
+
+*defining state method 1:*
+
+```JS
+class App extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            sampleLis: [],
+        };
+    }
+```
+
+*defining state method 2:*
+
+```JS
+class App extends Component {
+    state = {
+        sampleLis: [],
+    };
+```
+
+We'll leverage method 2 for defining our state.
+
+```JS
+class App extends Component {
+    state = {
+        sampleList: [
+            'Mail Letter',
+            'Wash Dishes',
+            'Cut Grass',
+        ],
+    }
+
+    clickAddToList(event) {
+        this.state.sampleList.push('Pick Up Dinner');
+        console.log(this.state.sampleList);
+    }
+
+    render() {
+        return (
+            <div className="scaffold">
+                <div className="scaffold-hd">
+                    <Header />
+                </div>
+                <div className="scaffold-bd">
+                    {JSON.stringify(this.state.sampleList)}
+                    <button onClick={this.clickAddToList}>Add Sample</button>
+                    <TodoList />
+                </div>
+                <div className="scaffold-ft">
+                    <Footer />
+                </div>
+            </div>
+        );
+    }
+}
+```
+
+If you were to test the application in your browser you would notice an error as soon as you clicked the button. This is because our event handler method is not bound to the scope of our `App` class. To correct this we need to bind the `clickAddToList` to the scope of our `App` class luckily ES6 gave us arrow function and we can leverage that to correct our scoping issue.
+
+```JS
+class App extends Component {
+    state = {
+        sampleList: [
+            'Mail Letter',
+            'Wash Dishes',
+            'Cut Grass',
+        ],
+    }
+
+    clickAddToList = (event) => {
+        this.state.sampleList.push('Pick Up Dinner');
+        console.log(this.state.sampleList);
+    }
+```
+
+If we test our application again after this update we won't get an error when we click the button but our DOM is still not getting re-render. We can't alter the state directly, instead we need to leverage a class method that React provides us called `setState()`. We pass a new object to `setState()` with the updated properties we want.
+
+*alter `clickAddToList` to use `setState()`:*
+
+```JS
+clickAddToList = (event) => {
+    const newSampleList = this.state.sampleList;
+    newSampleList.push('Pick Up Dinner');
+    this.setState({
+        sampleList: newSampleList,
+    })
+    console.log(this.state.sampleList);
+}
+```
+
+Now if you test out the application in your browser you'll notice that the DOM render is now being updated as we push items into the array. This is the power of local state and what we use in order to re-render our React DOM when there has been a change.
+
+How do we get the `sampleList` state over to our new `TodoList.js` component without physically moving the state in the code? React provides a way for us to do this with something called `props`. Passing the data to `<TodoList />` is as simple as creating an attribute on the component element.
+
+```JS
+    ...
+</div>
+<div className="scaffold-bd">
+    <TodoList list={this.state.sampleList} />
+</div>
+<div className="scaffold-ft">
+    ...
+```
+
+We access the data we pass using the `props` property on our `TodoList` class.
+
+```JS
+class TodoList extends Component {
+    render() {
+        return (
+            <div>
+                {JSON.stringify(this.props.list)}
+            </div>
+        );
+    }
+}
+```
+
+This is great we can see the list rendering through our `TodoList` component in the browser now. Let's update our `sampleList` to be more complex data that we can leverage to render actual todo items in our list.
+
+*in `App.js`:*
+
+```JS
+class App extends Component {
+    state = {
+        sampleList: [
+            {
+                name: 'Mail Letter',
+                description: 'A sample description of our todo.',
+                isComplete: false,
+            },
+            {
+                name: 'Wash Dishes',
+                description: 'A sample description of our todo.',
+                isComplete: true,
+            },
+            {
+                name: 'Cut Grass',
+                description: 'A sample description of our todo.',
+                isComplete: false,
+            },
+        ],
+    }
+```
+
+To start let's simply render an unordered list of all the names from the new list. 
+
+```JS
+class TodoList extends Component {
+    render() {
+        const listItems = this.props.list.map((item, index) => {
+            return <li>{item.name}</li>
+        });
+
+        return (
+            <div>
+                <ul>
+                    {listItems}
+                </ul>
+            </div>
+        );
+    }
+}
+```
+
+If you look at this in the browser make sure to open up the console. There should be an error in the console that says, `Warning: Each child in a list should have a unique "key" prop.`. Any time we are creating a list of elements to be rendered in the JSX we need to add a unique `key` attribute to the element. For this the `index` of the item in the array is awfully handy.
+
+```JS
+class TodoList extends Component {
+    render() {
+        const listItems = this.props.list.map((item, index) => {
+            return <li key={index}>{item.name}</li>
+        });
+```
+
+We could potentially create the more complex markup right here in the `TodoList.js` component but we're going to create a new component that represents the list item. This is a very common pattern that you will see in React because this allows each individual item to have it's own local state.
+
+*create `TodoItem.js` at `./src/components/TodoItem`:*
+
+```JS
+import React, { Component } from 'react';
+
+class TodoItem extends Component {
+    render() {
+        const {
+            todo,
+        } = this.props;
+
+        return (
+            <li>
+                <div>
+                    <div>
+                        <input
+                            type="checkbox"
+                            name="complete"
+                            checked={todo.isComplete}
+                        />
+                    </div>
+                    <div>
+                        <h4>todo.name</h4>
+                        <p>todo.description</p>
+                    </div>
+                    <div>
+                        <button>Delete</button>
+                    </div>
+                </div> 
+            </li>
+        );
+    }
+}
+
+export default TodoItem;
+```
+
+*replace the `<li>` with our `<TodoIem />` in `App.js`:*
+
+```JS
+import React, { Component } from 'react';
+import TodoItem from '../TodoItem/TodoItem';
+
+class TodoList extends Component {
+    render() {
+        const listItems = this.props.list.map((item, index) => {
+            return <TodoItem key={index} todo={item} />
+        });
 ```
