@@ -1171,8 +1171,8 @@ class TodoItem extends Component {
                         />
                     </div>
                     <div>
-                        <h4>todo.name</h4>
-                        <p>todo.description</p>
+                        <h4>{todo.name}</h4>
+                        <p>{todo.description}</p>
                     </div>
                     <div>
                         <button>Delete</button>
@@ -1198,3 +1198,146 @@ class TodoList extends Component {
             return <TodoItem key={index} todo={item} />
         });
 ```
+
+If you check the updates to the application in the browser we can see that React is surfacing an error in the browser's console. This is a good time to talk about the change event listener that React gives us. All form fields have the ability to add a change event listener to them. This will allow us to track when a user makes a change to a form field. The implementation is like the `<button onClick={this.clickAddToList}>` we saw earlier while testing React's render and re-render. The change event listener uses the `onChange` attribute to assign an event handler. While we're at it though we might as well add the click event handler to our **Delete** button as well.
+
+```JS
+class TodoItem extends Component {
+    changeCompleteStatus = (event) => {
+        // update item complete status
+    }
+
+    clickDelete = (event) => {
+        // delete the todo item
+    }
+
+    render() {
+        const {
+            todo,
+        } = this.props;
+
+        return (
+            <li>
+                <div>
+                    <div>
+                        <input
+                            type="checkbox"
+                            name="complete"
+                            checked={todo.isComplete}
+                            onChange={this.changeCompleteStatus}
+                        />
+                    </div>
+                    <div>
+                        <h4>{todo.name}</h4>
+                        <p>{todo.description}</p>
+                    </div>
+                    <div>
+                        <button
+                            onClick={this.clickDelete}
+                        >
+                            Delete
+                        </button>
+                    </div>
+                </div> 
+            </li>
+        );
+    }
+}
+```
+
+We have a problem though. How do we edit the data in the list if the state is being held in `App.js`? For this we'll leverage `props` but instead of passing data down we'll pass a couple of callbacks down for deleting and updating the list data.
+
+*create the delete and complete functions in `App.js`:*
+
+```JS
+deleteTodoFromList = (index) => {
+    let newSampleList = this.state.sampleList;
+    newSampleList.splice(index, 1);
+
+    this.setState({
+        sampleList: newSampleList,
+    });
+}
+
+completeTodo = (isComplete, index) => {
+    let newSampleList = this.state.sampleList;
+    newSampleList[index].isComplete = isComplete;
+
+    this.setState({
+        sampleList: newSampleList,
+    })
+}
+```
+
+*pass these new callback methods to `<TodoList />` in `App.js`:*
+
+```JS
+render() {
+    return (
+        <div className="scaffold">
+            <div className="scaffold-hd">
+                <Header />
+            </div>
+            <div className="scaffold-bd">
+                <TodoList
+                    list={this.state.sampleList}
+                    completeCallback={this.completeTodo}
+                    deleteCallback={this.deleteTodoFromList}
+                />
+            </div>
+            <div className="scaffold-ft">
+                <Footer />
+            </div>
+        </div>
+    );
+}
+```
+
+*pass the callbacks to `<TodoItem />` from `TodoList.js`:*
+
+```JS
+class TodoList extends Component {
+    render() {
+        const listItems = this.props.list.map((item, index) => {
+            return <TodoItem
+                key={index}
+                todo={item}
+                index={index}
+                completeCallback={this.props.completeCallback}
+                deleteCallback={this.props.deleteCallback}
+            />
+        });
+
+        return (
+            <div>
+                <ul>
+                    {listItems}
+                </ul>
+            </div>
+        );
+    }
+}
+```
+
+*use the callbacks in `TodoItem.js`:*
+
+```JS
+class TodoItem extends Component {
+    changeCompleteStatus = (event) => {
+        const toggledCompleteStatus = !this.props.todo.isComplete;
+        const todoIndex = this.props.index;
+
+        this.props.completeCallback(toggledCompleteStatus, todoIndex);
+    }
+
+    clickDelete = (event) => {
+        const todoIndex = this.props.index;
+
+        this.props.deleteCallback(todoIndex);
+    }
+```
+
+If we look at our application in the browser we can see the full list being rendered. The checkboxes for marking our todos complete and the delete buttons actually work as well. The application should look something like this now.
+
+[Code Sample](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-5)
+<img alt="Application after completing Phase 1.5" src="phase1.5-complete.png" />
