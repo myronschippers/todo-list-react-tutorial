@@ -890,14 +890,11 @@ In **Phase 1.5** we're gonna take a look at a very common pattern for rendering 
 **Editing (files):**
 
 * `App.js` - `./src/components/App/App.js`
-* `App.css` - `./src/components/App/App.css`
 
 **Adding (files):**
 
 * `TodoList.js` - `./src/components/TodoList/TodoList.js`
-* `TodoList.css` - `./src/components/TodoList/TodoList.css`
 * `TodoListItem.js` - `./src/components/TodoListItem/TodoListItem.js`
-* `TodoListItem.css` - `./src/components/TodoListItem/TodoListItem.css`
 
 We could always try building out the functionality of the Todo List first and then decide how to componentize but as mentioned before there is a very common pattern used when rendering lists with React components. Let's go ahead and create a new file for our Todo List.
 
@@ -1341,3 +1338,150 @@ If we look at our application in the browser we can see the full list being rend
 
 [Code Sample](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-5)
 <img alt="Application after completing Phase 1.5" src="phase1.5-complete.png" />
+
+### Phase 1.6: Add Todo Component
+
+In **Phase 1.6** we're gonna make form to add new todos to our Daily Todo List. We'll be taking a look at how we submit form data and use it to update state data. Some of what we'll need we've already seen such as passing down callbacks and the `onChange` event listener.
+
+**Sample Repo Branch:**
+
+* [Todo after Phase 1.6](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-6)
+
+**Editing (files):**
+
+* `App.js` - `./src/components/App/App.js`
+
+**Adding (files):**
+
+* `AddTodo.js` - `./src/components/AddTodo/AddTodo.js`
+
+Let's start by making a new component called `AddTodo` at `./src/components/AddTodo/AddTodo.js` with 2 form fields on for the todo name and the other for the todo description. We'll also need an **Add Todo** button in order to trigger the adding of the entered data as a new item in the todo list.
+
+```JS
+import React, { Component } from 'react';
+
+class AddTodo extends Component {
+    state = {
+        name: '',
+        description: '',
+    };
+
+    changeField = (event, fieldName) => {
+        const stateObj = {};
+        stateObj[fieldName] = event.target.value;
+
+        this.setState(stateObj);
+    }
+
+    clickAddTodo = (event) => {
+        this.props.addTodoCallback(this.state);
+    }
+
+    render() {
+        return (
+            <div>
+                <div>
+                    <label>
+                        Name:
+                        <input
+                            type="text"
+                            placeholder="Name"
+                            onChange={(event) => this.changeField(event, 'name')}
+                        />
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Description:
+                        <textarea
+                            onChange={(event) => this.changeField(event, 'description')}
+                        />
+                    </label>
+                </div>
+                <div>
+                    <button onClick={this.clickAddTodo}>Add Todo</button>
+                </div>
+            </div>
+        );
+    }
+}
+
+export default AddTodo;
+```
+
+We are keeping track of the values entered by the user every time it changes in the input by storing it on the local state. There is a single method `changeField()` that handles the change event for all the fields but we had to do something a little different to get it to work for all of the fields. The method needed something to distinguish one call from the other and in this case we are using the key for that particular state data. Normally the event listener would be `onChange={this.changeField}` but we can't pass any additional information to the `changeField()` method so instead we use an anonymous arrow function and call to the method inside of that function. This allows us to use the `event` object and pass a unique value along as well. There are other ways we could have accomplished this.
+
+*add the `AddTodo` component to `App.js`:*
+
+```JS
+// COMPONENTS
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
+import TodoList from '../TodoList/TodoList';
+import AddTodo from '../AddTodo/AddTodo';
+
+class App extends Component {
+    state = {
+        ...
+```
+
+```JS
+    ...
+</div>
+<div className="scaffold-bd">
+    <h2>Daily Todo List</h2>
+    <AddTodo />
+    <TodoList
+        list={this.state.sampleList}
+        completeCallback={this.completeTodo}
+        deleteCallback={this.deleteTodoFromList}
+    />
+</div>
+<div className="scaffold-ft">
+    ...
+```
+
+*create callback method for adding todo in `App.js`:*
+
+```JS
+addTodoItem = (todo) => {
+    const newTodo = {
+        ...todo,
+        isComplete: false,
+    };
+    const newSampleList = this.state.sampleList;
+    newSampleList.push(newTodo);
+
+    this.setState({
+        sampleList: newSampleList,
+    });
+}
+
+render() {
+    return (
+```
+
+*pass the `addTodoItem()` method to the `<AddTodo />` component:*
+
+```JS
+    ...
+</div>
+<div className="scaffold-bd">
+    <h2>Daily Todo List</h2>
+    <AddTodo
+        addTodoCallback={this.addTodoItem}
+    />
+    <TodoList
+        list={this.state.sampleList}
+        completeCallback={this.completeTodo}
+        deleteCallback={this.deleteTodoFromList}
+    />
+</div>
+<div className="scaffold-ft">
+    ...
+```
+
+Now we can add new Todo items to our list. Take a look at the application in the browser. The application should look something like this now.
+
+[Code Sample](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-6)
+<img alt="Application after completing Phase 1.6" src="phase1.6-complete.png" />
