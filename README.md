@@ -1485,3 +1485,250 @@ Now we can add new Todo items to our list. Take a look at the application in the
 
 [Code Sample](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-6)
 <img alt="Application after completing Phase 1.6" src="phase1.6-complete.png" />
+
+### Phase 1.7: Styling Daily Todo List
+
+In **Phase 1.7** we're just adding styling to our application. I'll give you the styles you'll need but feel free to do whatever you want to do for styling. It's being provided so you can just skip past spending time on styling and just move on to additional functionality.
+
+*add styling to `App.css`:*
+
+```CSS
+/* ----------------------------------------------------------------------
+Container
+---------------------------------------------------------------------- */
+
+.container {
+    width: 500px;
+	max-width: 100%;
+    padding: 20px;
+    margin: auto;
+    box-sizing: border-box;
+}
+```
+
+*add wrapping element to main body content in `App.js`:*
+
+```JS
+    ...
+</div>
+<div className="scaffold-bd">
+    <div className="container">
+        <h2>Daily Todo List</h2>
+        <AddTodo
+            addTodoCallback={this.addTodoItem}
+        />
+        <TodoList
+            list={this.state.sampleList}
+            completeCallback={this.completeTodo}
+            deleteCallback={this.deleteTodoFromList}
+        />
+    </div>
+</div>
+<div className="scaffold-ft">
+    ...
+```
+
+*add background color to the `body` in `index.css`:*
+
+```CSS
+body {
+	background-color: #f8f8ff;
+	font-family: 'Open Sans', 'Segoe UI', Tahoma, Geneva, Arial, sans-serif;
+}
+```
+
+*adjust background colors for footer in `Footer.css`:*
+
+```CSS
+.appBase {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 15px 20px 20px;
+    background: #dcdce6;
+    font-size: 0.8rem;
+    text-align: center;
+
+    position: relative;
+}
+
+.appBase:before {
+    content: " ";
+    width: 70%;
+    height: 1px;
+    border-radius: 1px;
+    background: #7f7f8a;
+
+    /* CSS Centering */
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%, 0);
+}
+```
+
+*add styling to `App.css`:*
+
+```CSS
+/* ----------------------------------------------------------------------
+Heading
+---------------------------------------------------------------------- */
+
+.hdg {
+	color: #37668c;
+	font-size: 1rem;
+}
+
+.hdg_1 {
+	font-size: 2rem;
+}
+
+.hdg_2 {
+	font-size: 1.9rem;
+}
+
+.hdg_3 {
+	font-size: 1.9rem;
+}
+
+.hdg_4 {
+	font-size: 1.8rem;
+}
+
+.hdg_5 {
+	font-size: 1.7rem;
+}
+
+.hdg_6 {
+	font-size: 1.6rem;
+}
+
+/* ----------------------------------------------------------------------
+Vertical Rhythm
+---------------------------------------------------------------------- */
+
+.vr {
+	margin-bottom: 10px;
+}
+
+.vr_x2 {
+	margin-bottom: 20px;
+}
+
+.vr_x3 {
+	margin-bottom: 30px;
+}
+
+.vr_x4 {
+	margin-bottom: 40px;
+}
+
+/* ----------------------------------------------------------------------
+Box
+---------------------------------------------------------------------- */
+
+.box {
+	width: 100%;
+	padding: 20px 20px 25px;
+	border: 1px solid #d5d5de;
+	box-sizing: border-box;
+	border-radius: 10px;
+	background: #ffffff;
+}
+
+/* ----------------------------------------------------------------------
+Field
+---------------------------------------------------------------------- */
+
+.field {
+	display: block;
+}
+
+.field + .field {
+	margin-top: 10px;
+}
+
+.field-label {
+	display: block;
+	margin-bottom: 5px;
+	font-size: 0.8rem;
+	color: #7f7f8a;
+}
+
+.field-input {
+	width: 100%;
+	padding: 5px;
+	border: 1px solid #7f7f8a;
+	box-sizing: border-box;
+	border-radius: 3px;
+	font-size: 1rem;
+}
+
+.field-input_lrg {
+	height: 60px;
+}
+
+/* ----------------------------------------------------------------------
+Button
+---------------------------------------------------------------------- */
+
+.btn {
+    /* block */
+    padding: 8px 10px;
+    margin: 0;
+    border-width: 0;
+    border-bottom: 1px solid #20558a;
+    /* decoration */
+    border-radius: 3px;
+    background: #1E90FF;
+    box-shadow: 0px 2px 3px rgb(0, 0, 0, 0.2);
+    /* font / text */
+    line-height: 1.1;
+    color: rgb(0,0,0,0.7);
+    font-size: 1.1rem;
+    font-weight: 800;
+    text-shadow: 0px 1px 0px rgb(255, 255, 255, 0.2);
+    cursor: pointer;
+}
+
+.btn:hover {
+	background: #1876d6;
+}
+```
+
+*update the `AddTodo.js` markup:*
+
+```JS
+render() {
+    return (
+        <div className="box">
+            <div className="vr vr_x2">
+                <label className="field">
+                    <span className="field-label">Name:</span>
+                    <input
+                        className="field-input"
+                        type="text"
+                        placeholder="Name"
+                        onChange={(event) => this.changeField(event, 'name')}
+                    />
+                </label>
+                <label className="field">
+                    <span className="field-label">Description:</span>
+                    <textarea
+                        className="field-input field-input_lrg"
+                        onChange={(event) => this.changeField(event, 'description')}
+                    />
+                </label>
+            </div>
+            <div>
+                <button
+                    className="btn"
+                    onClick={this.clickAddTodo}
+                >
+                    Add Todo
+                </button>
+            </div>
+        </div>
+    );
+}
+```
