@@ -1696,7 +1696,7 @@ Button
 }
 ```
 
-*update the `AddTodo.js` markup:*
+*update the `AddTodo.js` JSX markup:*
 
 ```JS
 render() {
@@ -1731,4 +1731,139 @@ render() {
         </div>
     );
 }
+```
+
+*updates in `App.js` for adding a wrapper around `<AddTodo />` and classes to the `<h2>`:*
+
+```JS
+<div className="scaffold-bd">
+    <div className="container">
+        <h2 className="hdg hdg_1">Daily Todo List</h2>
+        <div className="vr vr_x2">
+            <AddTodo
+                addTodoCallback={this.addTodoItem}
+            />
+        </div>
+        <TodoList
+            list={this.state.sampleList}
+            completeCallback={this.completeTodo}
+            deleteCallback={this.deleteTodoFromList}
+        />
+    </div>
+</div>
+```
+
+*create new file `./src/components/TodoItem/TodoItem.css`:*
+
+```CSS
+.todoPill {
+    display: flex;
+    align-items: center;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+}
+
+.todoPill > * + * {
+    margin-left: 10px;
+}
+
+.todoPill > *:last-child {
+    margin-left: auto;
+}
+
+.todoPill-hdg {
+    display: block;
+    margin: 0 0 4px;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.todoPill-sub {
+    display: block;
+    margin: 0;
+    font-size: 0.8rem;
+    color: #7f7f8a;
+}
+```
+
+*add import for `TodoItem.css` into `TodoItem.js`:*
+
+```JS
+import React, { Component } from 'react';
+import './TodoItem.css';
+
+class TodoItem extends Component {
+```
+
+*add `.todoPill` classes to the `TodoItem.js` JSX markup:*
+
+```JS
+render() {
+    const {
+        todo,
+    } = this.props;
+
+    return (
+        <li>
+            <div className="todoPill">
+                <div>
+                    <input
+                        type="checkbox"
+                        name="complete"
+                        checked={todo.isComplete}
+                        onChange={this.changeCompleteStatus}
+                    />
+                </div>
+                <div>
+                    <h4 className="todoPill-hdg">{todo.name}</h4>
+                    <p className="todoPill-sub">{todo.description}</p>
+                </div>
+                <div>
+                    <button
+                        className="btn btn_warning"
+                        onClick={this.clickDelete}
+                    >
+                        Delete
+                    </button>
+                </div>
+            </div> 
+        </li>
+    );
+}
+```
+
+*create new stylesheet `./src/components/TodoList.css`:*
+
+```CSS
+.cleanList {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.cleanList > * + * {
+    margin-top: 10px;
+}
+```
+
+*import `TodoList.css` into `TodoList.js`:*
+
+```JS
+import React, { Component } from 'react';
+import './TodoList.css';
+import TodoItem from '../TodoItem/TodoItem';
+
+class TodoList extends Component {
+```
+
+*update `TodoList.js` JSX markup with new classes:*
+
+```JS
+return (
+    <div className="box">
+        <ul className="cleanList">
+            {listItems}
+        </ul>
+    </div>
+);
 ```
