@@ -1878,3 +1878,60 @@ If you decided to load up the styling updates that were provided then take a loo
 
 [Code Sample](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-7)
 <img alt="Application after completing Phase 1.7" src="phase1.7-complete.png" />
+
+### Phase 1.8: Alternatives to Custom Styling
+
+If you've used styling libraries like bootstrap, foundation, or bulma you'll like the idea of integrating such UI Libraries into React Components to make styling and consistency a little easier. Below is a list of some of what I think are the better ones out there. These are just more tools to add to your arsenal and would highly recommend you taking a look at one and trying it out. I'll leave a full demo for a different tutorial. For now I just want to make sure that you are aware that these are options.
+
+**React UI Component Libraries:**
+
+*(In no particular order)*
+
+* [React Foundation](https://react.foundation/?ref=designrevision.com), from [Zurb's Foundation](https://foundation.zurb.com)
+* [React Bootstrap](https://react-bootstrap.github.io/), from [Bootstrap](https://getbootstrap.com/)
+* [Material-UI](https://material-ui.com/), from [Material Design](https://material.io/design/)
+* [Semantic UI React](https://react.semantic-ui.com/?ref=designrevision.com), from [Semantic UI](https://semantic-ui.com/)
+* [UI Fabric](https://developer.microsoft.com/en-us/fabric?ref=designrevision.com#/), from Microsoft
+* [Carbon Design System](https://www.carbondesignsystem.com/), from IBM
+* [Gestalt](https://pinterest.github.io/gestalt/?ref=designrevision.com#/), from Pinterest
+* [Atlaskit](https://atlaskit.atlassian.com/), from Atlassian
+* [PrimeReact](https://www.primefaces.org/primereact/#/?ref=designrevision.com), from PrimeTek Informatics
+* [Shards](https://designrevision.com/demo/shards/)
+* [Grommet](https://v2.grommet.io/)
+
+
+## Phase 2: Add Todo Component
+
+In **Phase 2** we're going to add a completely new feature to our todo application. This is going to be the addition of custom todo list categorizations. With the ability for users to create new todo categories there will also need to be two additional pages added that we can navigate to. One page will show all of the available categories and the other will be a details page for a single category and the todos that are in that category. There will be decisions in this phase that I will leave up to you and more steps that you'll have to complete on your own. As usual I will be supplying a repository reference for sample code if you get stuck.
+
+**New Requirements:**
+
+* Categories Page
+    * List of all the custom categories created by the user
+    * When a user clicks on a category's **Details** button they are navigated to a new page.
+* Details Page
+    * Lists out all todos that belong to the particular category
+    * User can add a new todo to the specific category
+    * Todos listed should have all of the same features that we have already created
+* Daily Todos Page
+    * The Daily Todos that we created will need to be moved into its own page
+    * This new page will be used as the home or landing page for our application
+    * It will be exactly the same as the state we left it off in.
+
+**New Dependencies / Technnologies:**
+
+* [redux](https://redux.js.org/)
+* [react-redux](https://redux.js.org/basics/usage-with-react)
+* [react-router-dom](https://www.npmjs.com/package/react-router-dom)
+
+**Sample Repo Branch:**
+
+* [Todo after Phase 1.7](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-7)
+
+**Editing (files):**
+
+* `App.js` - `./src/components/App/App.js`
+
+**Adding (files):**
+
+* `AddTodo.js` - `./src/components/AddTodo/AddTodo.js`
