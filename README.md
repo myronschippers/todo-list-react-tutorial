@@ -1490,6 +1490,12 @@ Now we can add new Todo items to our list. Take a look at the application in the
 
 In **Phase 1.7** we're just adding styling to our application. I'll give you the styles you'll need but feel free to do whatever you want to do for styling. It's being provided so you can just skip past spending time on styling and just move on to additional functionality.
 
+**Sample Repo Branch:**
+
+* [Todo after Phase 1.7](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-7)
+
+**Styling Updates**
+
 *add styling to `App.css`:*
 
 ```CSS
@@ -1867,3 +1873,8 @@ return (
     </div>
 );
 ```
+
+If you decided to load up the styling updates that were provided then take a look at the application in the browser. The application should look something like this now.
+
+[Code Sample](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-7)
+<img alt="Application after completing Phase 1.7" src="phase1.7-complete.png" />
