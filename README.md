@@ -1899,6 +1899,8 @@ If you've used styling libraries like bootstrap, foundation, or bulma you'll lik
 * [Shards](https://designrevision.com/demo/shards/)
 * [Grommet](https://v2.grommet.io/)
 
+Any of these are great ways to kick off your project and allow you to get something that looks good up and operational quickly. None of these however will cover everything you need. You will most likely need to write at least some custom CSS in order to get everything to look exactly how you want it to.
+
 
 ## Phase 2: Add Todo Component
 
