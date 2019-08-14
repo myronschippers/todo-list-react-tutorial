@@ -1902,7 +1902,7 @@ If you've used styling libraries like bootstrap, foundation, or bulma you'll lik
 Any of these are great ways to kick off your project and allow you to get something that looks good up and operational quickly. None of these however will cover everything you need. You will most likely need to write at least some custom CSS in order to get everything to look exactly how you want it to.
 
 
-## Phase 2: Add Todo Component
+## Phase 2: Categorized Todo Lists
 
 In **Phase 2** we're going to add a completely new feature to our todo application. This is going to be the addition of custom todo list categorizations. With the ability for users to create new todo categories there will also need to be two additional pages added that we can navigate to. One page will show all of the available categories and the other will be a details page for a single category and the todos that are in that category. There will be decisions in this phase that I will leave up to you and more steps that you'll have to complete on your own. As usual I will be supplying a repository reference for sample code if you get stuck.
 
@@ -1919,21 +1919,41 @@ In **Phase 2** we're going to add a completely new feature to our todo applicati
     * The Daily Todos that we created will need to be moved into its own page
     * This new page will be used as the home or landing page for our application
     * It will be exactly the same as the state we left it off in.
+* Custom List Creation (feature)
+    * Need a new feature that allows the user to enter in the name of 
 
-**New Dependencies / Technnologies:**
+**New Dependencies / Technologies:**
 
 * [redux](https://redux.js.org/)
 * [react-redux](https://redux.js.org/basics/usage-with-react)
 * [react-router-dom](https://www.npmjs.com/package/react-router-dom)
 
+### Phase 2.1: Creating Pages
+
+In **Phase 2.1** we'll be setting up the different pages we need for our new features. This will include a Daily, Categories, and Details pages for our users to navigate between.  
+
 **Sample Repo Branch:**
 
-* [Todo after Phase 1.7](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-7)
+* [Todo after Phase 2.1](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-7)
 
 **Editing (files):**
 
 * `App.js` - `./src/components/App/App.js`
+* `Header.js` - `./src/components/Header/Header.js`
 
 **Adding (files):**
 
-* `AddTodo.js` - `./src/components/AddTodo/AddTodo.js`
+* `PageLanding.js` - `./src/components/PageLanding/PageLanding.js`
+* `PageCategories.js` - `./src/components/PageCategories/PageCategories.js`
+* `PageCategoryDetails.js` - `./src/components/PageCategoryDetails/PageCategoryDetails.js`
+* `Navigation.js` - `./src/components/Navigation/Navigation.js`
+
+## Phase 3: Persisting Data and Making AJAX Requests
+
+**COMING SOON**
+
+## Phase 4: User Login
+
+**COMING SOON**
+
+## Phase 5: Using 
