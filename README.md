@@ -1930,7 +1930,7 @@ In **Phase 2** we're going to add a completely new feature to our todo applicati
 
 ### Phase 2.1: Creating Pages
 
-In **Phase 2.1** we'll be setting up the different pages we need for our new features. This will include a Daily, Categories, and Details pages for our users to navigate between.  
+In **Phase 2.1** we'll be setting up the different pages we need for our new features. This will include a Daily, Categories, and Details pages for our users to navigate between. If they want to manage categories they will goto th categories page and if they want to alter / update the todos in the particular category they will go to the details page.
 
 **Sample Repo Branch:**
 
