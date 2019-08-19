@@ -1926,15 +1926,118 @@ In **Phase 2** we're going to add a completely new feature to our todo applicati
 
 * [redux](https://redux.js.org/)
 * [react-redux](https://redux.js.org/basics/usage-with-react)
+* [redux-logger](https://www.npmjs.com/package/redux-logger)
 * [react-router-dom](https://www.npmjs.com/package/react-router-dom)
 
-### Phase 2.1: Creating Pages
+#### Install Dependencies
 
-In **Phase 2.1** we'll be setting up the different pages we need for our new features. This will include a Daily, Categories, and Details pages for our users to navigate between. If they want to manage categories they will goto th categories page and if they want to alter / update the todos in the particular category they will go to the details page.
+*from the terminal run:*
+
+```
+npm install --save redux react-redux redux-logger react-router-dom
+```
+
+
+### Phase 2.1: Creating Categories
+
+In **Phase 2.1** we'll be adding the ability to create categories for our todos. This will make our data structure more complex and instead of passing data back and forth between the components we're going to leverage `redux` to make this data management a little easier. With `redux` we can move some of the work we were doing with the local state on to the state provided by `redux`. Implementation of `redux` inside of React also needs the `react-redux`dependency in order to leverage it from the component level and have React's state management be aware of the changes to the `redux` state.
 
 **Sample Repo Branch:**
 
-* [Todo after Phase 2.1](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-7)
+* [Todo after Phase 2.1](https://github.com/myronschippers/todo-list-app/tree/feature-phase-2-1)
+
+**Editing (files):**
+
+* `App.js` - `./src/components/App/App.js`
+* `index.js` - `./src/index.js`
+
+**Adding (files):**
+
+* `store.js` - `./src/redux/store.js`
+* `mapStoreToProps.js` - `./src/redux/mapStoreToProps.js`
+* `all.reducers.js` - `./src/redux/reducers/all.reducers.js`
+* `dailyTodos.reducer.js` - `./src/redux/reducers/dailyTodos.reducer.js`
+
+In order to get a feel for `redux` we'll start by switching our current Daily Todo over to leveraging `redux` instead of local state. This will start with some initial setup inside of `index.js` in order to pass the `redux` store over to the React application as it's kicked off.
+
+*in `index.js`:*
+
+```JS
+import App from './components/App/App';
+import * as serviceWorker from './serviceWorker';
+import { Provider } from 'react-redux';
+
+ReactDOM.render(<Provider><App /></Provider>, document.getElementById('root'));
+```
+
+The `<App />` component element gets wrapped with the `<Provider>` component element that we just imported form `react-redux`. This will give us the ability to use the `redux` store that we end up setting up in our application. We'll need to setup the store first before we can use any of our reducers to manage data state at a global level.
+
+*create new file `./src/redux/store.js`:*
+
+```JS
+import { createStore, applyMiddleware } from 'redux';
+import logger from 'redux-logger';
+
+// this line creates an array of all of redux middleware you want to use
+// we don't want a whole ton of console logs in our production code
+// logger will only be added to your project if your in development mode
+const middlewareList = process.env.NODE_ENV === 'development' ?
+  [logger] :
+  [];
+
+const store = createStore(
+    // adds all middleware to our project including saga and logger
+    applyMiddleware(...middlewareList),
+);
+
+export default store;
+```
+
+*create an initial `./src/redux/_root.reducers.js`:*
+
+```JS
+export {};
+```
+
+```JS
+import { createStore, applyMiddleware } from 'redux';
+import logger from 'redux-logger';
+
+import rootReducer from './reducers/_root.reducers.js'
+
+// this line creates an array of all of redux middleware you want to use
+// we don't want a whole ton of console logs in our production code
+// logger will only be added to your project if your in development mode
+const middlewareList = process.env.NODE_ENV === 'development' ?
+  [logger] :
+  [];
+
+const store = createStore(
+    // tells the saga middleware to use the rootReducer
+    // rootSaga contains all of our other reducers
+    rootReducer,
+    // adds all middleware to our project including saga and logger
+    applyMiddleware(...middlewareList),
+);
+
+export default store;
+```
+
+```JS
+import * as serviceWorker from './serviceWorker';
+import { Provider } from 'react-redux';
+import store from './redux/store';
+
+ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
+```
+
+### Phase 2.?: Creating Pages
+
+In **Phase 2.?** we'll be setting up the different pages we need for our new features. This will include a Daily, Categories, and Details pages for our users to navigate between. If they want to manage categories they will goto th categories page and if they want to alter / update the todos in the particular category they will go to the details page.
+
+**Sample Repo Branch:**
+
+* [Todo after Phase 2.?](https://github.com/myronschippers/todo-list-app/tree/feature-phase-2-?)
 
 **Editing (files):**
 
@@ -1947,6 +2050,115 @@ In **Phase 2.1** we'll be setting up the different pages we need for our new fea
 * `PageCategories.js` - `./src/components/PageCategories/PageCategories.js`
 * `PageCategoryDetails.js` - `./src/components/PageCategoryDetails/PageCategoryDetails.js`
 * `Navigation.js` - `./src/components/Navigation/Navigation.js`
+
+We'll need to begin by installing the router for our Front-End.
+
+*from terminal run:*
+
+```
+npm install --save react-router-dom
+```
+
+Once the dependency is installed there are a couple of different components that will need to be imported from `react-router-dom`.
+
+*in App.js:*
+
+```JS
+import {
+    HashRouter as Router,
+    Route,
+    Link,
+} from 'react-router-dom';
+```
+
+Before we start leveraging the router let's begin stubbing in the pages we'll need. We can start with the Landing page first and then create the rest. 
+
+*create a new file `./src/components/PageLanding/PageLanding.js`:*
+
+```JS
+import React, { Component } from 'react';
+
+class LandingPage extends Component {
+    render() {
+        return (
+            <div>
+                <div className="pageTitle">
+                    <h2 className="pageTitle-main">Daily Todos</h2>
+                    <p className="pageTitle-sub">Keep your day organized with these daily tasks.</p>
+                </div>
+
+                <div>
+                    PAGE BODY CONTENT
+                </div>
+            </div>
+        );
+    }
+}
+
+export default LandingPage;
+```
+
+The styling will be added in `App.css` because we'll use it across all the pages we create.
+
+*to the bottom of `App.css` add:*
+
+```CSS
+
+```
+
+We will use the `<Router>` component to wrap the entire `App.js` content so that it is the outer most element. This will give us our shell for the router allowing us to load particular content up based on the hash in our URL route.
+
+```JS
+class App extends Component {
+    render() {
+        return (
+            <Router>
+                <div className="scaffold">
+                    <div className="scaffold-hd">
+                        {/* ... HEADER (see Phase 1.3) ... */}
+                    </div>
+                    <div className="scaffold-bd">
+                        <SplashImg hdgText="Keep yourself organized" btnText="Get Started" />
+                    </div>
+                    <div className="scaffold-ft">
+                        {/* ... FOOTER (see Phase 1.3) ... */}
+                    </div>
+                </div>
+            </Router>
+        );
+    }
+}
+```
+
+Now we need page that we can hook up to our router. We are going to create 5 files, one for each of our pages. They will each look very similar apart from their text content will be that of the individual pages name. Let's start with the landing page and then I will give you a list of the rest of the pages to do on your own. If you run up against some trouble take a look at the [Sample Code](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-6).
+
+Create `LandingPage.js` component as a new file at `./src/components/LandingPage/LandingPage.js` with the following code:
+
+```JS
+import React, { Component } from 'react';
+
+class LandingPage extends Component {
+    render() {
+        return (
+            <div>
+                LANDING PAGE
+            </div>
+        );
+    }
+}
+
+export default LandingPage;
+```
+
+A couple of things to keep in mind with these class component declarations is that the name of the class will usually mirror the the name of the Javascript file. This helps with organization and to know that at a glance we're working with a class component (classes are named in uppercase camel case).
+
+Repeat the steps that you just executed for creating the `PageLanding.js` for the othe four pages we're going to need in our `PageCategories.js`, `CategoryDetailsPage.js`, and `PageDashboard.js`.
+
+**Create all pages:**
+
+1. `./src/components/PageCategories/PageCategories.js`
+1. `./src/components/CategoryDetailsPage/CategoryDetailsPage.js`
+1. `./src/components/PageDashboard/PageDashboard.js`
 
 ## Phase 3: Persisting Data and Making AJAX Requests
 
