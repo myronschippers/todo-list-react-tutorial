@@ -1963,17 +1963,17 @@ In **Phase 2.1** we'll be adding the ability to create categories for our todos.
 
 In order to get a feel for `redux` we'll start by switching our current Daily Todo over to leveraging `redux` instead of local state. This will start with some initial setup inside of `index.js` in order to pass the `redux` store over to the React application as it's kicked off.
 
-*in `index.js`:*
+1. in `index.js` add `react-redux` `Provider`
 
-```JS
-import App from './components/App/App';
-import * as serviceWorker from './serviceWorker';
-import { Provider } from 'react-redux';
+    ```JS
+    import App from './components/App/App';
+    import * as serviceWorker from './serviceWorker';
+    import { Provider } from 'react-redux';
 
-ReactDOM.render(<Provider><App /></Provider>, document.getElementById('root'));
-```
+    ReactDOM.render(<Provider><App /></Provider>, document.getElementById('root'));
+    ```
 
-The `<App />` component element gets wrapped with the `<Provider>` component element that we just imported form `react-redux`. This will give us the ability to use the `redux` store that we end up setting up in our application. We'll need to setup the store first before we can use any of our reducers to manage data state at a global level.
+    * The `<App />` component element gets wrapped with the `<Provider>` component element that we just imported form `react-redux`. This will give us the ability to use the `redux` store that we end up setting up in our application. We'll need to setup the store first before we can use any of our reducers to manage data state at a global level.
 
 1. create new file `./src/redux/store.js`:
 
