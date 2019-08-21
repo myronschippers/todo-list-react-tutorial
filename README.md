@@ -1963,6 +1963,8 @@ In **Phase 2.1** we'll be adding the ability to create categories for our todos.
 
 In order to get a feel for `redux` we'll start by switching our current Daily Todo over to leveraging `redux` instead of local state. This will start with some initial setup inside of `index.js` in order to pass the `redux` store over to the React application as it's kicked off.
 
+#### Redux Setup
+
 1. in `index.js` add `react-redux` `Provider`
 
     ```JS
@@ -2052,20 +2054,31 @@ In order to get a feel for `redux` we'll start by switching our current Daily To
     ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
     ```
 
+#### Creating and Using Reducers
+
 1. create the first reducer to store the Daily Todo data
 
     ```JS
-    const dailyTodos = (state = [], action) => {
-        switch (action.type) {
-            case 'DAILY_TODO_ADD':
-                return [...state, action.payload];
-            case 'DAILY_TODO_SET':
-                return [...action.payload];
-            case 'DAILY_TODO_CLEAR':
-                return [];
-            default:
-                return state;
-        }
+    const sampleList = [
+        {
+            name: 'Mail Letter',
+            description: 'A sample description of our todo.',
+            isComplete: false,
+        },
+        {
+            name: 'Wash Dishes',
+            description: 'A sample description of our todo.',
+            isComplete: true,
+        },
+        {
+            name: 'Cut Grass',
+            description: 'A sample description of our todo.',
+            isComplete: false,
+        },
+    ];
+
+    const dailyTodos = (state = sampleList, action) => {
+        return state;
     };
 
     export default dailyTodos;
