@@ -1949,13 +1949,16 @@ In **Phase 2.1** we'll be adding the ability to create categories for our todos.
 **Editing (files):**
 
 * `App.js` - `./src/components/App/App.js`
+* `TodoList.js` - `./src/components/App/App.js`
+* `TodoItem.js` - `./src/components/App/App.js`
+* `AddTodo.js` - `./src/components/App/App.js`
 * `index.js` - `./src/index.js`
 
 **Adding (files):**
 
 * `store.js` - `./src/redux/store.js`
 * `mapStoreToProps.js` - `./src/redux/mapStoreToProps.js`
-* `all.reducers.js` - `./src/redux/reducers/all.reducers.js`
+* `_root.reducers.js` - `./src/redux/reducers/_root.reducers.js`
 * `dailyTodos.reducer.js` - `./src/redux/reducers/dailyTodos.reducer.js`
 
 In order to get a feel for `redux` we'll start by switching our current Daily Todo over to leveraging `redux` instead of local state. This will start with some initial setup inside of `index.js` in order to pass the `redux` store over to the React application as it's kicked off.
@@ -1972,64 +1975,120 @@ ReactDOM.render(<Provider><App /></Provider>, document.getElementById('root'));
 
 The `<App />` component element gets wrapped with the `<Provider>` component element that we just imported form `react-redux`. This will give us the ability to use the `redux` store that we end up setting up in our application. We'll need to setup the store first before we can use any of our reducers to manage data state at a global level.
 
-*create new file `./src/redux/store.js`:*
+1. create new file `./src/redux/store.js`:
 
-```JS
-import { createStore, applyMiddleware } from 'redux';
-import logger from 'redux-logger';
+    ```JS
+    import { createStore, applyMiddleware } from 'redux';
+    import logger from 'redux-logger';
 
-// this line creates an array of all of redux middleware you want to use
-// we don't want a whole ton of console logs in our production code
-// logger will only be added to your project if your in development mode
-const middlewareList = process.env.NODE_ENV === 'development' ?
-  [logger] :
-  [];
+    // this line creates an array of all of redux middleware you want to use
+    // we don't want a whole ton of console logs in our production code
+    // logger will only be added to your project if your in development mode
+    const middlewareList = process.env.NODE_ENV === 'development' ?
+    [logger] :
+    [];
 
-const store = createStore(
-    // adds all middleware to our project including saga and logger
-    applyMiddleware(...middlewareList),
-);
+    const store = createStore(
+        // adds all middleware to our project including saga and logger
+        applyMiddleware(...middlewareList),
+    );
 
-export default store;
-```
+    export default store;
+    ```
 
-*create an initial `./src/redux/_root.reducers.js`:*
+1. create an initial `./src/redux/_root.reducers.js`:
 
-```JS
-export {};
-```
+    ```JS
+    import { combineReducers } from 'redux';
 
-```JS
-import { createStore, applyMiddleware } from 'redux';
-import logger from 'redux-logger';
+    // rootReducer is the primary reducer for our entire project
+    // It bundles up all of the other reducers so our project can use them.
 
-import rootReducer from './reducers/_root.reducers.js'
+    // Lets make a bigger object for our store, with the objects from our reducers.
+    // This is what we get when we use 'state' inside of 'mapStoreToProps'
+    const rootReducer = combineReducers({
+    });
 
-// this line creates an array of all of redux middleware you want to use
-// we don't want a whole ton of console logs in our production code
-// logger will only be added to your project if your in development mode
-const middlewareList = process.env.NODE_ENV === 'development' ?
-  [logger] :
-  [];
+    export default rootReducer;
+    ```
 
-const store = createStore(
-    // tells the saga middleware to use the rootReducer
-    // rootSaga contains all of our other reducers
-    rootReducer,
-    // adds all middleware to our project including saga and logger
-    applyMiddleware(...middlewareList),
-);
+    > Note: Each new reducer created will be imported into this file and added to a single object. This greater object gets passed into the `createStore` function. If any new reducer is not added to this file it will not be tracked or available to the rest of the application.
 
-export default store;
-```
+1. add the `_root.reducer.js` to the redux store:
 
-```JS
-import * as serviceWorker from './serviceWorker';
-import { Provider } from 'react-redux';
-import store from './redux/store';
+    ```JS
+    import { createStore, applyMiddleware } from 'redux';
+    import logger from 'redux-logger';
 
-ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
-```
+    import rootReducer from './reducers/_root.reducers.js'
+
+    // this line creates an array of all of redux middleware you want to use
+    // we don't want a whole ton of console logs in our production code
+    // logger will only be added to your project if your in development mode
+    const middlewareList = process.env.NODE_ENV === 'development' ?
+    [logger] :
+    [];
+
+    const store = createStore(
+        // tells the saga middleware to use the rootReducer
+        // rootSaga contains all of our other reducers
+        rootReducer,
+        // adds all middleware to our project including saga and logger
+        applyMiddleware(...middlewareList),
+    );
+
+    export default store;
+    ```
+
+1. supply the `<Provider>` component in `index.js` with the store that has been created:
+
+    > Note: The `<Provider>` component must always be supplied a redux store via the store attribute on the component element.
+
+    ```JS
+    import * as serviceWorker from './serviceWorker';
+    import { Provider } from 'react-redux';
+    import store from './redux/store';
+
+    ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
+    ```
+
+1. create the first reducer to store the Daily Todo data
+
+    ```JS
+    const dailyTodos = (state = [], action) => {
+        switch (action.type) {
+            case 'DAILY_TODO_ADD':
+                return [...state, action.payload];
+            case 'DAILY_TODO_SET':
+                return [...action.payload];
+            case 'DAILY_TODO_CLEAR':
+                return [];
+            default:
+                return state;
+        }
+    };
+
+    export default dailyTodos;
+    ```
+
+    * The reducer is being setup to add, clear, and set the Daily Todo List data.
+
+1. add the new reducer to the `_root.reducers.js`:
+    * import the reducer module:
+
+        ```JS
+        import { combineReducers } from 'redux';
+        import dailyTodos from './dailyTodos.reducer';
+        ```
+
+    * add the imported reducer to the reducers object:
+
+        ```JS
+        const rootReducer = combineReducers({
+            dailyTodos,
+        });
+        ```
+
 
 ### Phase 2.?: Creating Pages
 
