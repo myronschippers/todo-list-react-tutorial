@@ -2102,7 +2102,41 @@ In order to get a feel for `redux` we'll start by switching our current Daily To
         });
         ```
 
-1. now that the Daily Todos are stored in the reducer we can swap the local state in the `App.js` with the new redux reducer:
+1. Create a module to map redux state to a React component.
+    * add a `mapStoreToProps.js` file to the `./src/redux` directory:
+
+        ```JS
+        const mapStoreToProps = reduxState => ({
+            store: reduxState,
+        });
+
+        export default mapStoreToProps;
+        ```
+
+1. source `connect` into the `App.js` component:
+
+    ```JS
+    import React, { Component } from 'react';
+    import './App.css';
+    import { connect } from 'react-redux';
+
+    // COMPONENTS
+    import Header from '../Header/Header';
+    import Footer from '../Footer/Footer';
+    ```
+
+1. use connect to process the App.js component giving it axis to redux:
+
+    ```JS
+        // ...
+    }
+
+    export default connect()(App);
+    ```
+
+Now that the Daily Todos are stored in a reducer we can swap the local state in the `App.js` with the new redux reducer. The power of the redux reducers means that we could use the data from the new reducer in any component we wish so we could potentially use it directly in the `TodoList.js` component but for now we are simply going to swap out the use of `this.state.sampleList` for the new reducer.
+
+1. alter `App.js` so that it can leverage the redux reducer by first 
 
     ```JS
     ```
