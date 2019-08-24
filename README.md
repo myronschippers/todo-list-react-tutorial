@@ -2102,6 +2102,11 @@ In order to get a feel for `redux` we'll start by switching our current Daily To
         });
         ```
 
+1. now that the Daily Todos are stored in the reducer we can swap the local state in the `App.js` with the new redux reducer:
+
+    ```JS
+    ```
+
 
 ### Phase 2.?: Creating Pages
 
