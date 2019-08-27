@@ -2113,7 +2113,9 @@ In order to get a feel for `redux` we'll start by switching our current Daily To
         export default mapStoreToProps;
         ```
 
-1. source `connect` into the `App.js` component:
+        > Note: The `mapStoreToProps.js` module that we just created is meant to be used for mapping the redux reducers onto the `props` property of the our React components. In the next couple of steps we'll see how the module gets used on a component.
+
+1. source `connect` into the `App.js` component from the `react-redux` dependency:
 
     ```JS
     import React, { Component } from 'react';
@@ -2134,12 +2136,102 @@ In order to get a feel for `redux` we'll start by switching our current Daily To
     export default connect()(App);
     ```
 
-Now that the Daily Todos are stored in a reducer we can swap the local state in the `App.js` with the new redux reducer. The power of the redux reducers means that we could use the data from the new reducer in any component we wish so we could potentially use it directly in the `TodoList.js` component but for now we are simply going to swap out the use of `this.state.sampleList` for the new reducer.
-
-1. alter `App.js` so that it can leverage the redux reducer by first 
+1. source in the mapStoreToProps.js module into the App.js:
 
     ```JS
+    import React, { Component } from 'react';
+    import './App.css';
+    import { connect } from 'react-redux';
+    import mapStoreToProps from '../../redux/mapStoreToProps';
+
+    // COMPONENTS
+    import Header from '../Header/Header';
+    import Footer from '../Footer/Footer';
     ```
+
+1. pass `mapStoreToProps` in the first function call of the `connect` as an argument:
+
+    ```JS
+        // ...
+    }
+
+    export default connect(mapStoreToProps)(App);
+    ```
+
+Now that the Daily Todos are stored in a reducer we can swap the local state in the `App.js` with the new redux reducer. The power of the redux reducers means that we could use the data from the new reducer in any component we wish so we could potentially use it directly in the `TodoList.js` component but for now we are simply going to swap out the use of `this.state.sampleList` for the new reducer.
+
+1. remove `sampleList` local state:
+
+    * *before:*
+
+        ```JS
+        class App extends Component {
+            state = {
+                sampleList: [
+                    {
+                        name: 'Mail Letter',
+                        description: 'A sample description of our todo.',
+                        isComplete: false,
+                    },
+                    {
+                        name: 'Wash Dishes',
+                        description: 'A sample description of our todo.',
+                        isComplete: true,
+                    },
+                    {
+                        name: 'Cut Grass',
+                        description: 'A sample description of our todo.',
+                        isComplete: false,
+                    },
+                ],
+            }
+
+            clickAddToList = (event) => {
+        ```
+
+    * *after:*
+
+        ```JS
+        class App extends Component {
+
+            clickAddToList = (event) => {
+        ```
+
+    > Note: We are removing the local state first so that we see errors in our browser until we get all of the simpleList local state uses replace with the reducer.
+
+1. alter `App.js` component `render()` method to replace uses of `this.state.sampleList` with `this.props.store.dailyTodos`:
+
+    ```JS
+    render() {
+        return (
+            <div className="scaffold">
+                <div className="scaffold-hd">
+                    <Header />
+                </div>
+                <div className="scaffold-bd">
+                    <div className="container">
+                        <h2 className="hdg hdg_1">Daily Todo List</h2>
+                        <div className="vr vr_x2">
+                            <AddTodo
+                                addTodoCallback={this.addTodoItem}
+                            />
+                        </div>
+                        <TodoList
+                            list={this.props.store.dailyTodos}
+                            completeCallback={this.completeTodo}
+                            deleteCallback={this.deleteTodoFromList}
+                        />
+                    </div>
+                </div>
+                <div className="scaffold-ft">
+                    <Footer />
+                </div>
+            </div>
+        );
+    }
+    ```
+
+    > Note: We are able to access `this.props.store` because of the work we did with `mapStoreToProps.js` and it is literally adding a `store` property to `props`. The `store` property is an object type with key value pairs that match the reducers we have setup in `_root.reducers.js`.
 
 
 ### Phase 2.?: Creating Pages
