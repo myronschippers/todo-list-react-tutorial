@@ -1983,9 +1983,9 @@ In **Phase 2.1** we'll be adding the ability to create categories for our todos.
 
 In order to get a feel for `redux` we'll start by switching our current Daily Todo over to leveraging `redux` instead of local state. This will start with some initial setup inside of `index.js` in order to pass the `redux` store over to the React application as it's kicked off.
 
-#### Redux Setup
+#### 2.1.1 - Redux Setup
 
-1. in `index.js` add `react-redux` `Provider`
+1. in `index.js` add `react-redux` `Provider`:
 
     ```JS
     import App from './components/App/App';
@@ -1995,7 +1995,7 @@ In order to get a feel for `redux` we'll start by switching our current Daily To
     ReactDOM.render(<Provider><App /></Provider>, document.getElementById('root'));
     ```
 
-    * The `<App />` component element gets wrapped with the `<Provider>` component element that we just imported form `react-redux`. This will give us the ability to use the `redux` store that we end up setting up in our application. We'll need to setup the store first before we can use any of our reducers to manage data state at a global level.
+    > Note: The `<App />` component element gets wrapped with the `<Provider>` component element that we just imported form `react-redux`. This will give us the ability to use the `redux` store that we end up setting up in our application. We'll need to setup the store first before we can use any of our reducers to manage data state at a global level.
 
 1. create new file `./src/redux/store.js`:
 
@@ -2018,6 +2018,8 @@ In order to get a feel for `redux` we'll start by switching our current Daily To
     export default store;
     ```
 
+    > Note: The `store` is where all of the magic happens in redux. The broadcasted actions are all received by the `store` and from there the reducers process the action updating the the state for redux as needed.
+
 1. create an initial `./src/redux/_root.reducers.js`:
 
     ```JS
@@ -2036,7 +2038,7 @@ In order to get a feel for `redux` we'll start by switching our current Daily To
 
     > Note: Each new reducer created will be imported into this file and added to a single object. This greater object gets passed into the `createStore` function. If any new reducer is not added to this file it will not be tracked or available to the rest of the application.
 
-1. add the `_root.reducer.js` to the redux store:
+1. source the `_root.reducer.js` into the redux store:
 
     ```JS
     import { createStore, applyMiddleware } from 'redux';
@@ -2062,9 +2064,9 @@ In order to get a feel for `redux` we'll start by switching our current Daily To
     export default store;
     ```
 
-1. supply the `<Provider>` component in `index.js` with the store that has been created:
+    > Note: We already used the leveraged `combineReducers` function in our `_root.reducers.js` module so we can use the module directly as the first argument passed toe `createStore()`.
 
-    > Note: The `<Provider>` component must always be supplied a redux store via the store attribute on the component element.
+1. supply the `<Provider>` component in `index.js` with the store that has been created:
 
     ```JS
     import * as serviceWorker from './serviceWorker';
@@ -2074,9 +2076,11 @@ In order to get a feel for `redux` we'll start by switching our current Daily To
     ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
     ```
 
-#### Creating and Using Reducers
+    > Note: The `<Provider>` component must always be supplied a redux store via the store attribute on the component element.
 
-1. create the first reducer to store the Daily Todo data
+#### 2.1.2 - Reducers, Creation and Usage
+
+1. create a new reducer file `dailyTodos.reducer.js` in the `./src/redux/reducers/` directory:
 
     ```JS
     const sampleList = [
@@ -2104,17 +2108,17 @@ In order to get a feel for `redux` we'll start by switching our current Daily To
     export default dailyTodos;
     ```
 
-    * The reducer is being setup to add, clear, and set the Daily Todo List data.
+    > Note: This reducer is going to hold our Daily Todo List data. We have copied over the `sampleList` from our `App.js` and use it as our default state.
 
 1. add the new reducer to the `_root.reducers.js`:
-    * import the reducer module:
+    * source in the reducer module:
 
         ```JS
         import { combineReducers } from 'redux';
         import dailyTodos from './dailyTodos.reducer';
         ```
 
-    * add the imported reducer to the reducers object:
+    * add the imported reducer to the reducers object being used as the `combineReducers()` argument:
 
         ```JS
         const rootReducer = combineReducers({
@@ -2122,7 +2126,7 @@ In order to get a feel for `redux` we'll start by switching our current Daily To
         });
         ```
 
-1. Create a module to map redux state to a React component.
+1. create a module to map redux state to a React component:
     * add a `mapStoreToProps.js` file to the `./src/redux` directory:
 
         ```JS
@@ -2147,7 +2151,7 @@ In order to get a feel for `redux` we'll start by switching our current Daily To
     import Footer from '../Footer/Footer';
     ```
 
-1. use connect to process the App.js component giving it axis to redux:
+1. use connect to process the `App.js` component giving it axis to redux:
 
     ```JS
         // ...
@@ -2156,7 +2160,9 @@ In order to get a feel for `redux` we'll start by switching our current Daily To
     export default connect()(App);
     ```
 
-1. source in the mapStoreToProps.js module into the App.js:
+    > Note: The `connect` function makes the `dispatch` property available on the component's `props` property. Without `dispatch` we would not be able to broadcast actions off to the redux `store`.
+
+1. source in the `mapStoreToProps.js` module into the `App.js`:
 
     ```JS
     import React, { Component } from 'react';
@@ -2178,9 +2184,9 @@ In order to get a feel for `redux` we'll start by switching our current Daily To
     export default connect(mapStoreToProps)(App);
     ```
 
-Now that the Daily Todos are stored in a reducer we can swap the local state in the `App.js` with the new redux reducer. The power of the redux reducers means that we could use the data from the new reducer in any component we wish so we could potentially use it directly in the `TodoList.js` component but for now we are simply going to swap out the use of `this.state.sampleList` for the new reducer.
+    > Note: Now that the Daily Todos are stored in a reducer we can swap the local state in the `App.js` with the new redux reducer. The power of the redux reducers means that we could use the data from the new reducer in any component we wish so we could potentially use it directly in the `TodoList.js` component but for now we are simply going to swap out the use of `this.state.sampleList` for the new reducer.
 
-1. remove `sampleList` local state:
+1. in `App.js` remove the `sampleList` local state:
 
     * *before:*
 
@@ -2252,6 +2258,128 @@ Now that the Daily Todos are stored in a reducer we can swap the local state in 
     ```
 
     > Note: We are able to access `this.props.store` because of the work we did with `mapStoreToProps.js` and it is literally adding a `store` property to `props`. The `store` property is an object type with key value pairs that match the reducers we have setup in `_root.reducers.js`.
+
+With this we are no longer dependent on the local state for our list of todos. We could potentially even use the the reducer directly within the `<TodoList>` component instead of passing the list down to the component but with additional categories getting added it's going to be better to generalize the `<TodoList>` component. This generalization will allow us to leverage the one component for all the rest of our todo lists. 
+
+#### 2.1.3 - Reducer Actions
+
+The Daily Todo List reducer still needs a way in which to add, update, and remove Todo items from the list. Currently all our `dailyTodos` reducer does is return a default list of todos. In order to allow the adding, updating, and deleting of todo items in our reducer we'll be leveraging `actions` which are what gets broadcasted off to the redux `store`. The `action` is an object with two very specific properties of `type` and `payload`. The `type` property is used as an identifier to tell the store what the action is meant to do. The `payload` property can be any data type we chose to send off to the reducer.
+
+1. add a conditional statement to `dailyTodos.reducer.js` that will check the `action.type` broadcasted to see if it is meant to add an item to the Daily Todo List:
+
+    ```JS
+    const dailyTodos = (state = sampleList, action) => {
+        // Add a todo item to the Daily Todo List
+        if (action.type === 'ADD_DAILY_TODO') {
+            return [
+                ...state,
+                action.payload
+            ];
+        }
+
+        return state;
+    };
+
+    export default dailyTodos;
+    ```
+
+    > Note: Any `action.type` should be written as a string in all caps with underscore delimiters. Take notice that we have to leverage the spread operator because the state in our reducer is immutable same as the local state we had written in our components. The current state is spread into a new array and then we add the item that was being stored on `action.payload` to the array.
+
+1. add a check to `dailyTodos.reducer.js` that will update an item in the array:
+
+    ```JS
+    const dailyTodos = (state = sampleList, action) => {
+        // Add a todo item to the Daily Todo List
+        if (action.type === 'ADD_DAILY_TODO') {
+            return [
+                ...state,
+                action.payload
+            ];
+        }
+        // Update an item in Daily Todo List
+        if (action.type === 'UPDATE_DAILY_TODO') {
+            const {
+                todoId,
+                newTodo
+            } = action.payload;
+
+            return state.map((todo, index) => {
+                if (index === todoId) {
+                    return {
+                        ...todo,
+                        ...newTodo,
+                    };
+                }
+
+                return todo;
+            });
+        }
+
+        return state;
+    };
+
+    export default dailyTodos;
+    ```
+
+1. add a conditional to `dailyTodos.reducer.js` that will check for the removal of an item:
+
+    ```JS
+    const dailyTodos = (state = sampleList, action) => {
+        // Add a todo item to the Daily Todo List
+        if (action.type === 'ADD_DAILY_TODO') {
+            return [
+                ...state,
+                action.payload
+            ];
+        }
+        // Update an item in Daily Todo List
+        if (action.type === 'UPDATE_DAILY_TODO') {
+            const {
+                todoId,
+                newTodo
+            } = action.payload;
+
+            return state.map((todo, index) => {
+                if (index === todoId) {
+                    return {
+                        ...todo,
+                        ...newTodo,
+                    };
+                }
+
+                return todo;
+            });
+        }
+        // Remove an item from the Daily Todo List
+        if (action.type === 'REMOVE_DAILY_TODO') {
+            return state.filter((todo, index) => {
+                return index !== action.payload;
+            });
+        }
+
+        return state;
+    };
+
+    export default dailyTodos;
+    ```
+
+### Phase 2.2: Categorizing Todo Lists
+
+In **Phase 2.2** we'll be focusing more on the data and how we're going to categorize our todo lists. This will mean a way to group our todo items into separate lists. For this phase we aren't going to be concerned with the creation of different pages just yet. We will simply worry about creating new categories and storing newly created todo items in particular categories. 
+
+**Sample Repo Branch:**
+
+* [Todo after Phase 2.2](https://github.com/myronschippers/todo-list-app/tree/feature-phase-2-2)
+
+**Editing (files):**
+
+* `App.js` - `./src/components/App/App.js`
+* `TodoList.js` - `./src/components/TodoList/TodoList.js`
+* `AddTodo.js` - `./src/components/AddTodo/AddTodo.js`
+
+**Adding (files):**
+
+* `CategoryCreator.js` - `./src/components/CategoryCreator/CategoryCreator.js`
 
 
 ### Phase 2.?: Creating Pages
@@ -2383,7 +2511,7 @@ Repeat the steps that you just executed for creating the `PageLanding.js` for th
 1. `./src/components/CategoryDetailsPage/CategoryDetailsPage.js`
 1. `./src/components/PageDashboard/PageDashboard.js`
 
-## Phase 3: Persisting Data and Making AJAX Requests
+## Phase 3: Persisting Data
 
 **COMING SOON**
 
