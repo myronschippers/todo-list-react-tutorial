@@ -150,6 +150,8 @@ class App extends Component {
 
 If you look in your browser window with the application running it should look something like this.
 
+---
+
 [Code Sample](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-1)
 <img alt="Completing Phase 1.1" src="images/phase1.1-complete.png" />
 
@@ -313,6 +315,8 @@ class App extends Component {
 
 Let's check our browser again to make sure there are no errors and that our styles are showing up correctly for our new header content. It should look something like this.
 
+---
+
 [Code Sample](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-2)
 <img alt="Application after completing Phase 1.2" src="images/phase1.2-complete.png" />
 
@@ -389,6 +393,8 @@ class App extends Component {
 ```
 
 That's not a lot of content but if we look out our application in the browser that styling we implemented helps to give the footer content more visual presence.
+
+---
 
 [Code Sample](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-3)
 <img alt="Application after completing Phase 1.3" src="phase1.3-complete.png" />
@@ -520,6 +526,8 @@ class App extends Component {
 ```
 
 We should now have what looks like a full application in our web browser. Unfortunately there is no content yet but we'll get there.
+
+---
 
 [Code Sample](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-4)
 <img alt="Application after completing Phase 1.4" src="phase1.4-complete.png" />
@@ -737,6 +745,10 @@ class SplashImg extends Component {
 
 The implementation for a style attribute looks different from a normal attribute. Style attribute properties have to be implemented as an object. The style attribute won't accept a string value but only an object and you will see an error displayed on in the browser reflecting such. 
 
+---
+
+[Code Sample](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-5)
+<img alt="Completing Phase 1.5" src="images/phase1.5-complete.png" />
 
 ### Phase 1.6: Setup React Router and Create "Landing", "Daily", "Categories", & "Dashboard" Pages
 
@@ -927,6 +939,11 @@ With our page component imported go ahead and add the new `<Route />` for Daily 
 
 With that in place let's go ahead and test our new page by navigating to `http://localhost:3000/#/daily-todos`.
 
+---
+
+[Code Sample](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-6)
+<img alt="Completing Phase 1.6" src="images/phase1.6-complete.png" />
+
 ### Phase 1.7: Componentize Application Header
 
 In **Phase 1.7** 
@@ -942,6 +959,11 @@ In **Phase 1.7**
 **Adding (files):**
 
 * fileName - filePath
+
+---
+
+[Code Sample](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-1)
+<img alt="Completing Phase 1.1" src="images/phase1.1-complete.png" />
 
 ### Phase 1.8: Componentize Application Footer
 
