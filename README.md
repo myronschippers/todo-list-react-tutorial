@@ -450,6 +450,8 @@ Scaffold
 
 These styles are module specific styling that force the footer content to the bottom of our browser window even if the Main Body content of the page isn't enough content to push the footer to the bottom of the page. If you take a look at the browser where the application is currently loaded up you should see this styling in action. At this point the application should look something like this.
 
+---
+
 [Code Sample](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-1)
 <img alt="Completing Phase 1.1" src="images/phase1.1-complete.png" />
 
@@ -585,6 +587,8 @@ Logo Icon (app bar content)
 
 Let's check our browser again to make sure there are no errors and that our styles are showing up correctly for our new header content. It should look something like this.
 
+---
+
 [Code Sample](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-2)
 <img alt="Application after completing Phase 1.2" src="images/phase1.2-complete.png" />
 
@@ -667,8 +671,11 @@ App Base
 
 That's not a lot of content but if we look out our application in the browser that styling we implemented helps to give the footer content more visual presence.
 
+---
+
 [Code Sample](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-3)
 <img alt="Application after completing Phase 1.3" src="phase1.3-complete.png" />
+
 
 ### Phase 1.4: Componentizing Header and Footer Content
 
@@ -877,6 +884,11 @@ export default App;
 ```
 
 We have a fully componentized header. Go ahead and try componentizing the footer on your own and if you run into trouble take a look at the [Sample Code](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-4) for **Phase 1.4**.
+
+---
+
+[Code Sample](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-4)
+<img alt="Completing Phase 1.4" src="images/phase1.4-complete.png" />
 
 
 ### Phase 1.5: Rendering a List
@@ -1336,6 +1348,8 @@ class TodoItem extends Component {
 
 If we look at our application in the browser we can see the full list being rendered. The checkboxes for marking our todos complete and the delete buttons actually work as well. The application should look something like this now.
 
+---
+
 [Code Sample](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-5)
 <img alt="Application after completing Phase 1.5" src="phase1.5-complete.png" />
 
@@ -1483,8 +1497,11 @@ render() {
 
 Now we can add new Todo items to our list. Take a look at the application in the browser. The application should look something like this now.
 
+---
+
 [Code Sample](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-6)
 <img alt="Application after completing Phase 1.6" src="phase1.6-complete.png" />
+
 
 ### Phase 1.7: Styling Daily Todo List
 
@@ -1876,8 +1893,11 @@ return (
 
 If you decided to load up the styling updates that were provided then take a look at the application in the browser. The application should look something like this now.
 
+---
+
 [Code Sample](https://github.com/myronschippers/todo-list-app/tree/feature-phase-1-7)
 <img alt="Application after completing Phase 1.7" src="phase1.7-complete.png" />
+
 
 ### Phase 1.8: Alternatives to Custom Styling
 
