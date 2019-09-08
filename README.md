@@ -2273,7 +2273,10 @@ The Daily Todo List reducer still needs a way in which to add, update, and remov
         if (action.type === 'ADD_DAILY_TODO') {
             return [
                 ...state,
-                action.payload
+                {
+                    ...action.payload,
+                    isComplete: false
+                }
             ];
         }
 
@@ -2293,7 +2296,10 @@ The Daily Todo List reducer still needs a way in which to add, update, and remov
         if (action.type === 'ADD_DAILY_TODO') {
             return [
                 ...state,
-                action.payload
+                {
+                    ...action.payload,
+                    isComplete: false
+                }
             ];
         }
         // Update an item in Daily Todo List
@@ -2329,7 +2335,10 @@ The Daily Todo List reducer still needs a way in which to add, update, and remov
         if (action.type === 'ADD_DAILY_TODO') {
             return [
                 ...state,
-                action.payload
+                {
+                    ...action.payload,
+                    isComplete: false
+                }
             ];
         }
         // Update an item in Daily Todo List
@@ -2362,6 +2371,69 @@ The Daily Todo List reducer still needs a way in which to add, update, and remov
 
     export default dailyTodos;
     ```
+
+1. with our actions in place let's start by using the `ADD_DAILY_TODO` action to the `AddTodo.js` component:
+
+    ```JS
+    clickAddTodo = (event) => {
+        this.props.dispatch({
+            type: 'ADD_DAILY_TODO',
+            payload: this.state,
+        })
+    }
+    ```
+
+1. now that the add acition is being used the `addTodoCallback` is no longe needed and can be removed from `App.js`:
+    * remove `addTodoCallback` prop from the `<AddTodo>` component:
+
+        ```JS
+        render() {
+            console.log('props: ', this.props);
+            return (
+                <div className="scaffold">
+                    <div className="scaffold-hd">
+                        <Header />
+                    </div>
+                    <div className="scaffold-bd">
+                        <div className="container">
+                            <h2 className="hdg hdg_1">Daily Todo List</h2>
+                            <div className="vr vr_x2">
+                                <AddTodo />
+                            </div>
+                            <TodoList
+                                list={this.props.store.dailyTodos}
+                                completeCallback={this.completeTodo}
+                                deleteCallback={this.deleteTodoFromList}
+                            />
+                        </div>
+                    </div>
+                    <div className="scaffold-ft">
+                        <Footer />
+                    </div>
+                </div>
+            );
+        }
+        ```
+
+    * remove the `addTodoItem()` method from `App.js`:
+
+        ```JS
+        addTodoItem = (todo) => {
+            const newTodo = {
+                ...todo,
+                isComplete: false,
+            };
+            const newSampleList = this.state.sampleList;
+            newSampleList.push(newTodo);
+
+            this.setState({
+                sampleList: newSampleList,
+            });
+        }
+        ```
+
+1. 
+
 
 ### Phase 2.2: Categorizing Todo Lists
 
